@@ -14,11 +14,15 @@ public class DisplayMessageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_display_message);
 
         Intent intent = getIntent();
-        String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
+        String firstname = intent.getStringExtra(MainActivity.EXTRA_MESSAGE + "Firstname");
+        String lastname = intent.getStringExtra(MainActivity.EXTRA_MESSAGE + "Lastname");
+        String phone = intent.getStringExtra(MainActivity.EXTRA_MESSAGE + "Phone");
+        String email = intent.getStringExtra(MainActivity.EXTRA_MESSAGE + "Email");
+        String city = intent.getStringExtra(MainActivity.EXTRA_MESSAGE + "City");
 
         TextView textView = new TextView(this);
         textView.setTextSize(40);
-        textView.setText(message);
+        textView.setText(firstname + lastname + phone + email + city);
 
         ViewGroup layout = (ViewGroup) findViewById(R.id.activity_display_message);
         layout.addView(textView);
