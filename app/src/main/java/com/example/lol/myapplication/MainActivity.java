@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
         /////////////
 
-        dbHelper dbHelper = new dbHelper(this, NOM_BDD, null, VERSION_BDD);
+        dbHelper dbHelper = new dbHelper(this, NOM_BDD, VERSION_BDD);
         SQLiteDatabase bdd = dbHelper.getWritableDatabase();
 //        bdd = maBaseSQLite.getWritableDatabase();
 
@@ -54,7 +54,11 @@ public class MainActivity extends AppCompatActivity {
 
         //read
         String titre = "Book title";
-        Cursor c = bdd.query(TABLE_LIVRES, new String[] {COL_ID, COL_ISBN, COL_TITRE}, COL_TITRE + " LIKE \"" + titre +"\"", null, null, null, null);
+        Cursor c = bdd.query(
+                TABLE_LIVRES,
+                new String[] {COL_ID, COL_ISBN, COL_TITRE},
+                COL_TITRE + " LIKE \"" + titre +"\"",
+                null, null, null, null);
 
         //Sinon on se place sur le premier élément
         c.moveToFirst();
@@ -62,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         if (c.getCount() > 0) {
             Log.d("------ MY LG ------ : ", String.valueOf(c.getInt(NUM_COL_ID)));
             Log.d("------ MY LG ------ : ", String.valueOf(c.getString(NUM_COL_ISBN)));
-            Log.d("------ MY LG ------ : ", String.valueOf(c.getString(NUM_COL_TITRE));
+            Log.d("------ MY LG ------ : ", String.valueOf(c.getString(NUM_COL_TITRE)));
 
             c.getInt(NUM_COL_ID);
             c.getString(NUM_COL_ISBN);
@@ -82,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
 
         /////////////////////////////////////////////////////
     }
+
 
     public void createContact(View view) {
         Log.d("------ MY LOG ------ : ", "The createContact function was called");
