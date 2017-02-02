@@ -24,53 +24,54 @@ public class MainActivity extends AppCompatActivity {
 
         /////////////////////////////////////////////////////
 
-        /////////////
-        int VERSION_BDD = 1;
-        String NOM_BDD = "eleves.db";
-
-        String TABLE_LIVRES = "table_livres";
-        String COL_ID = "ID";
-        int NUM_COL_ID = 0;
-        String COL_ISBN = "ISBN";
-        int NUM_COL_ISBN = 1;
-        String COL_TITRE = "Titre";
-        int NUM_COL_TITRE = 2;
-
-        /////////////
-
-        dbHelper dbHelper = new dbHelper(this, NOM_BDD, VERSION_BDD);
+        dbHelper dbHelper = new dbHelper(this);
         SQLiteDatabase bdd = dbHelper.getWritableDatabase();
-//        bdd = maBaseSQLite.getWritableDatabase();
 
-        //insert
-        //Création d'un ContentValues (fonctionne comme une HashMap)
-        ContentValues values = new ContentValues();
-        //on lui ajoute une valeur associée à une clé (qui est le nom de la colonne dans laquelle on veut mettre la valeur)
-        values.put(COL_ISBN, "12345678900");
-        values.put(COL_TITRE, "Book title");
-        //on insère l'objet dans la BDD via le ContentValues
-        bdd.insert(TABLE_LIVRES, null, values);
+        dbHelper.insertContact(new Contact("John", "Doe", null, "", ""));
 
+//        //read
+//        String titre = "Doe";
+//        Cursor c = bdd.query(
+//                "contacts",
+//                new String[] {"firstname", "lastname"},
+//                "lastname LIKE \"" + titre +"\"",
+//                null, null, null, null);
 
-        //read
-        String titre = "Book title";
-        Cursor c = bdd.query(
-                TABLE_LIVRES,
-                new String[] {COL_ID, COL_ISBN, COL_TITRE},
-                COL_TITRE + " LIKE \"" + titre +"\"",
-                null, null, null, null);
+        Cursor c = bdd.rawQuery("SELECT * FROM contacts", null);
 
-        //Sinon on se place sur le premier élément
         c.moveToFirst();
 
-        if (c.getCount() > 0) {
-            Log.d("------ MY LG ------ : ", String.valueOf(c.getInt(NUM_COL_ID)));
-            Log.d("------ MY LG ------ : ", String.valueOf(c.getString(NUM_COL_ISBN)));
-            Log.d("------ MY LG ------ : ", String.valueOf(c.getString(NUM_COL_TITRE)));
+        String firstname    = "";
+        String lastname     = "";
+        String phone        = "";
+        String email        = "";
+        String city         = "";
 
-            c.getInt(NUM_COL_ID);
-            c.getString(NUM_COL_ISBN);
-            c.getString(NUM_COL_TITRE);
+        if (c.getCount() > 0) {
+
+            int index = -1;
+            if ((index = c.getColumnIndex("firstname")) != -1)
+                firstname = c.getString(index);
+            if ((index = c.getColumnIndex("lastname")) != -1)
+                lastname = c.getString(index);
+            if ((index = c.getColumnIndex("phone")) != -1)
+                phone = c.getString(index);
+            if ((index = c.getColumnIndex("email")) != -1)
+                email = c.getString(index);
+            if ((index = c.getColumnIndex("city")) != -1)
+                city = c.getString(index);
+
+            Contact aa = new Contact(firstname, lastname, phone, email, city);
+
+            Log.d("------ MY LG ------ : ", aa.getFirstname());
+            Log.d("------ MY LG ------ : ", aa.getLastname());
+            Log.d("------ MY LG ------ : ", aa.getPhone());
+            Log.d("------ MY LOG ------ : ", "getcount superieur a 0");
+
+        }
+        else
+        {
+            Log.d("------ MY LOG ------ : ", "getcount inferieur ou = a 0");
         }
 
 //        Cursor cursor = db.query(
@@ -86,7 +87,6 @@ public class MainActivity extends AppCompatActivity {
 
         /////////////////////////////////////////////////////
     }
-
 
     public void createContact(View view) {
         Log.d("------ MY LOG ------ : ", "The createContact function was called");
