@@ -29,16 +29,26 @@ public class createContactActivity extends AppCompatActivity {
             return ("");
     }
 
-    public void sendMessage(View view) {
+    public void addContactToDatabase(View view) {
         Log.d("------ MY LOG ------ : ", "The sendMessage function was called");
-        Intent intent = new Intent(this, DisplayMessageActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
 
-        intent.putExtra(EXTRA_MESSAGE + "Firstname", getInsertedValue(R.id.Firstname));
-        intent.putExtra(EXTRA_MESSAGE + "Lastname", getInsertedValue(R.id.Lastname));
-        intent.putExtra(EXTRA_MESSAGE + "Phone", getInsertedValue(R.id.Phone));
-        intent.putExtra(EXTRA_MESSAGE + "Email", getInsertedValue(R.id.Email));
-        intent.putExtra(EXTRA_MESSAGE + "City", getInsertedValue(R.id.City));
+        dbHelper dbHelper = new dbHelper(this);
 
+        dbHelper.insertContact(new Contact(
+                getInsertedValue(R.id.Firstname),
+                getInsertedValue(R.id.Lastname),
+                getInsertedValue(R.id.Phone),
+                getInsertedValue(R.id.Email),
+                getInsertedValue(R.id.City)
+        ));
+
+//        intent.putExtra(EXTRA_MESSAGE + "Firstname", getInsertedValue(R.id.Firstname));
+//        intent.putExtra(EXTRA_MESSAGE + "Lastname", getInsertedValue(R.id.Lastname));
+//        intent.putExtra(EXTRA_MESSAGE + "Phone", getInsertedValue(R.id.Phone));
+//        intent.putExtra(EXTRA_MESSAGE + "Email", getInsertedValue(R.id.Email));
+//        intent.putExtra(EXTRA_MESSAGE + "City", getInsertedValue(R.id.City));
+//
         startActivity(intent);
     }
 }

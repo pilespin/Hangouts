@@ -74,13 +74,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Log.d("------ MY LG ------ : ", "On create CALLED of mainActivity");
-        /////////////////////////////////////////////////////
-
-        dbHelper dbHelper = new dbHelper(this);
-        SQLiteDatabase bdd = dbHelper.getWritableDatabase();
-
-        dbHelper.insertContact(new Contact("John", "Doe", "062222222", "", ""));
-        dbHelper.insertContact(new Contact("Foo", "Bar", "065555445", "fb@gg.zz", "Ticyy"));
 
         List<Contact> allContact = getAllContact();
 
@@ -95,8 +88,17 @@ public class MainActivity extends AppCompatActivity {
             Log.d("------ MY LG ------ : ", co.getCity());
 
         }
-
         Log.d("------ MY LG ------ : ", "AFTER WHILE PASSED");
+    }
+
+    public void createContact(View view) {
+        Log.d("------ MY LOG ------ : ", "The createContactActivity function was called");
+        Intent intent = new Intent(this, createContactActivity.class);
+        startActivity(intent);
+    }
+}
+
+/////////////////////////////////////////////////////
 
 //        //read
 //        String titre = "Doe";
@@ -117,12 +119,4 @@ public class MainActivity extends AppCompatActivity {
 //        );
 
 
-        /////////////////////////////////////////////////////
-    }
-
-    public void createContact(View view) {
-        Log.d("------ MY LOG ------ : ", "The createContactActivity function was called");
-        Intent intent = new Intent(this, createContactActivity.class);
-        startActivity(intent);
-    }
-}
+/////////////////////////////////////////////////////
