@@ -8,6 +8,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     public final static String EXTRA_MESSAGE = "com.example.lol.myapplication.";
@@ -43,6 +47,27 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public List<Contact> getAllContact() {
+
+        dbHelper dbHelper = new dbHelper(this);
+        SQLiteDatabase bdd = dbHelper.getWritableDatabase();
+
+        Cursor c = bdd.rawQuery("SELECT * FROM contacts", null);
+        c.moveToFirst();
+
+        Log.d("------ MY LG ------ : ", "BEFORE WHILE PASSED");
+        List<Contact> allContact = new ArrayList<Contact>();
+
+        while (c.isAfterLast() == false) {
+            Log.d("------ MY LG ------ : ", "ON WHILE PASSED");
+            Contact contact = getContactInCursor(c);
+            if (contact != null)
+                allContact.add(contact);
+            c.moveToNext();
+        }
+        return (allContact);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,29 +82,20 @@ public class MainActivity extends AppCompatActivity {
         dbHelper.insertContact(new Contact("John", "Doe", "062222222", "", ""));
         dbHelper.insertContact(new Contact("Foo", "Bar", "065555445", "fb@gg.zz", "Ticyy"));
 
-        Cursor c = bdd.rawQuery("SELECT * FROM contacts", null);
+        List<Contact> allContact = getAllContact();
 
-        c.moveToFirst();
+        Iterator i = allContact.iterator();
+        while (i.hasNext())
+        {
+            Contact co = (Contact)i.next();
+            Log.d("------ MY LG ------ : ", co.getFirstname());
+            Log.d("------ MY LG ------ : ", co.getLastname());
+            Log.d("------ MY LG ------ : ", co.getPhone());
+            Log.d("------ MY LG ------ : ", co.getEmail());
+            Log.d("------ MY LG ------ : ", co.getCity());
 
-        Log.d("------ MY LG ------ : ", "BEFORE WHILE PASSED");
-        while (c.isAfterLast() == false) {
-//        for (c.moveToFirst() ; !c.isLast() ; c.moveToNext()) {
-        Log.d("------ MY LG ------ : ", "ON WHILE PASSED");
-        Log.d("------ MY NL ------ : ", "");
-            Contact contact = getContactInCursor(c);
-
-//            if (contact.getFirstname().length() > 0)
-                Log.d("------ MY LG ------ : ", contact.getFirstname());
-////            if (contact.getLastname().length() > 0)
-                Log.d("------ MY LG ------ : ", contact.getLastname());
-////            if (contact.getPhone().length() > 0)
-                Log.d("------ MY LG ------ : ", contact.getPhone());
-////            if (contact.getEmail().length() > 0)
-                Log.d("------ MY LG ------ : ", contact.getEmail());
-////            if (contact.getCity().length() > 0)
-//                Log.d("------ MY LG ------ : ", contact.getCity());
-            c.moveToNext();
         }
+
         Log.d("------ MY LG ------ : ", "AFTER WHILE PASSED");
 
 //        //read

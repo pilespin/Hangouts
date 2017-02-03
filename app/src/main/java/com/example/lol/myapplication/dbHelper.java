@@ -49,15 +49,15 @@ public class dbHelper extends SQLiteOpenHelper {
         //Création d'un ContentValues (fonctionne comme une HashMap)
         ContentValues values = new ContentValues();
         //on lui ajoute une valeur associée à une clé (qui est le nom de la colonne dans laquelle on veut mettre la valeur)
-        if (contact.getFirstname().length() > 0)
+        if (contact.getFirstname() != null)
             values.put("firstname", contact.getFirstname());
-        if (contact.getLastname().length() > 0)
+        if (contact.getLastname() != null)
             values.put("lastname", contact.getLastname());
-        if (contact.getPhone().length() > 0)
+        if (contact.getPhone() != null)
             values.put("phone", contact.getPhone());
-        if (contact.getEmail().length() > 0)
+        if (contact.getEmail() != null)
             values.put("email", contact.getEmail());
-        if (contact.getCity().length() > 0)
+        if (contact.getCity() != null)
             values.put("city", contact.getCity());
         //on insère l'objet dans la BDD via le ContentValues
         bdd.insert("contacts", null, values);
