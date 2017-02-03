@@ -14,11 +14,22 @@ public class Contact {
 
     public Contact(String firstname, String lastname, String phone, String email, String city) {
 
-        this.firstname  = firstname;
-        this.lastname   = lastname;
-        this.phone      = phone;
-        this.email      = email;
-        this.city       = city;
+        this.firstname  = "";
+        this.lastname   = "";
+        this.phone      = "";
+        this.email      = "";
+        this.city       = "";
+
+        if (firstname.length() > 0)
+            this.firstname  = firstname;
+        if (firstname.length() > 0)
+            this.lastname   = lastname;
+        if (firstname.length() > 0)
+            this.phone      = phone;
+        if (firstname.length() > 0)
+            this.email      = email;
+        if (firstname.length() > 0)
+            this.city       = city;
     }
 
     public String getFirstname()    { return (this.firstname);     }

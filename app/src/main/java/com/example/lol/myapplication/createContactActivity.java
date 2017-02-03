@@ -7,7 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
-public class createContact extends AppCompatActivity {
+public class createContactActivity extends AppCompatActivity {
 
     public final static String EXTRA_MESSAGE = "com.example.lol.myapplication.";
 
