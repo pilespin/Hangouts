@@ -1,8 +1,6 @@
 package com.example.lol.myapplication;
 
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -17,56 +15,6 @@ public class MainActivity extends AppCompatActivity {
 
     public final static String EXTRA_MESSAGE = "com.example.lol.myapplication.";
 
-    public Contact getContactInCursor(Cursor c) {
-
-        String firstname    = "";
-        String lastname     = "";
-        String phone        = "";
-        String email        = "";
-        String city         = "";
-
-        if (c.getColumnCount() > 0) {
-            int index = -1;
-            if ((index = c.getColumnIndex("firstname")) != -1)
-                firstname = c.getString(index);
-            if ((index = c.getColumnIndex("lastname")) != -1)
-                lastname = c.getString(index);
-            if ((index = c.getColumnIndex("phone")) != -1)
-                phone = c.getString(index);
-            if ((index = c.getColumnIndex("email")) != -1)
-                email = c.getString(index);
-            if ((index = c.getColumnIndex("city")) != -1)
-                city = c.getString(index);
-
-            Contact contact = new Contact(firstname, lastname, phone, email, city);
-            return (contact);
-        }
-        else
-        {
-            Log.d("------ MY LOG ------ : ", "Empty cursor");
-            return (null);
-        }
-    }
-
-    public List<Contact> getAllContact() {
-
-        dbHelper dbHelper = new dbHelper(this);
-        SQLiteDatabase bdd = dbHelper.getWritableDatabase();
-
-        Cursor c = bdd.rawQuery("SELECT * FROM contacts", null);
-        c.moveToFirst();
-
-        List<Contact> allContact = new ArrayList<Contact>();
-
-        while (c.isAfterLast() == false) {
-            Contact contact = getContactInCursor(c);
-            if (contact != null)
-                allContact.add(contact);
-            c.moveToNext();
-        }
-        return (allContact);
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,7 +22,9 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d("------ MY LG ------ : ", "On create CALLED of mainActivity");
 
-        final List<Contact>         allContact  = getAllContact();
+        dbHelper dbHelper = new dbHelper(getBaseContext());
+
+        final List<Contact>         allContact  = dbHelper.getAllContact(getBaseContext());
         final ArrayList<String>     allname     = new ArrayList<String>();
 
         Iterator i = allContact.iterator();
@@ -84,10 +34,9 @@ public class MainActivity extends AppCompatActivity {
             allname.add(co.getFirstname() + " " + co.getLastname());
         }
 
-        Log.d("------ MY LG ------ : ", "AFTER WHILE PASSED");
-        ///////////////////////////////////////////////////////
+        //Listview
+        /////////////////////////
         final ListView mListView;
-
         mListView = (ListView) findViewById(R.id.listView);
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -111,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this,
                 android.R.layout.simple_list_item_1, allname);
         mListView.setAdapter(adapter);
+        /////////////////////////
 
     }
 
