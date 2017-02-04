@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.widget.EditText;
 
 /**
  * Created by pilespin on 2/1/17.
@@ -13,7 +14,7 @@ import android.util.Log;
 public class dbHelper extends SQLiteOpenHelper {
 
     private static int VERSION_DB = 1;
-    private static String NAME_DB = "bdddddd.db";
+    private static String NAME_DB = "db.db";
 
     public dbHelper(Context context) {
         super(context, NAME_DB, null, VERSION_DB);
@@ -37,7 +38,7 @@ public class dbHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void insertContact(Contact contact) {
+    public boolean insertContact(Contact contact) {
         Log.d("------ MY LG ------ : ", "Called function create contact");
 
         SQLiteDatabase bdd = this.getWritableDatabase();
@@ -46,17 +47,42 @@ public class dbHelper extends SQLiteOpenHelper {
         //Création d'un ContentValues (fonctionne comme une HashMap)
         ContentValues values = new ContentValues();
         //on lui ajoute une valeur associée à une clé (qui est le nom de la colonne dans laquelle on veut mettre la valeur)
-        if (contact.getFirstname() != null)
+        if (contact.getFirstname() != null && contact.getFirstname().length() > 0)
             values.put("firstname", contact.getFirstname());
-        if (contact.getLastname() != null)
+        if (contact.getLastname() != null && contact.getLastname().length() > 0)
             values.put("lastname", contact.getLastname());
-        if (contact.getPhone() != null)
+        if (contact.getPhone() != null && contact.getPhone().length() > 0)
             values.put("phone", contact.getPhone());
-        if (contact.getEmail() != null)
+        if (contact.getEmail() != null && contact.getEmail().length() > 0)
             values.put("email", contact.getEmail());
-        if (contact.getCity() != null)
+        if (contact.getCity() != null && contact.getCity().length() > 0)
             values.put("city", contact.getCity());
         //on insère l'objet dans la BDD via le ContentValues
-        bdd.insert("contacts", null, values);
+        long ret = bdd.insert("contacts", null, values);
+
+        if (ret != -1)
+            return (true);
+        else
+            return (false);
+    }
+
+
+    public boolean deleteContactByPhone(Context context, String phone) {
+
+        dbHelper dbHelper = new dbHelper(context);
+        SQLiteDatabase bdd = dbHelper.getWritableDatabase();
+
+        long ret = bdd.delete("contacts", "phone=?", new String[]{phone});
+
+        if (ret > 0)
+            Log.d("------ MY LOG ------ : ", "delete ROW OK");
+        else
+            Log.d("------ MY LOG ------ : ", "delete NOT DELETE KO");
+
+        if (ret != -1)
+            return (true);
+        else
+            return (false);
+
     }
 }

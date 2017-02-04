@@ -56,11 +56,9 @@ public class MainActivity extends AppCompatActivity {
         Cursor c = bdd.rawQuery("SELECT * FROM contacts", null);
         c.moveToFirst();
 
-        Log.d("------ MY LG ------ : ", "BEFORE WHILE PASSED");
         List<Contact> allContact = new ArrayList<Contact>();
 
         while (c.isAfterLast() == false) {
-            Log.d("------ MY LG ------ : ", "ON WHILE PASSED");
             Contact contact = getContactInCursor(c);
             if (contact != null)
                 allContact.add(contact);
@@ -76,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d("------ MY LG ------ : ", "On create CALLED of mainActivity");
 
-        List<Contact>               allContact  = getAllContact();
+        final List<Contact>         allContact  = getAllContact();
         final ArrayList<String>     allname     = new ArrayList<String>();
 
         Iterator i = allContact.iterator();
@@ -95,6 +93,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.putToast(getApplicationContext(), "Click " + allname.get(position));
+                Intent intent = new Intent(MainActivity.this, ShowContactActivity.class);
+
+                intent.putExtra(EXTRA_MESSAGE + "Firstname", allContact.get(position).getFirstname());
+                intent.putExtra(EXTRA_MESSAGE + "Lastname", allContact.get(position).getLastname());
+                intent.putExtra(EXTRA_MESSAGE + "Phone", allContact.get(position).getPhone());
+                intent.putExtra(EXTRA_MESSAGE + "Email", allContact.get(position).getEmail());
+                intent.putExtra(EXTRA_MESSAGE + "City", allContact.get(position).getCity());
+
+                startActivity(intent);
             }
         });
 
@@ -109,8 +116,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void createContact(View view) {
         Log.d("------ MY LOG ------ : ", "The createContactActivity function was called");
-        Intent intent = new Intent(this, createContactActivity.class);
-        startActivity(intent);
+        startActivity(new Intent(this, createContactActivity.class));
     }
 }
 

@@ -1,14 +1,20 @@
 <resources>
+
     <string name="app_name">My Application</string>
     <string name="edit_message">Enter a message</string>
     <string name="button_send">Send</string>
 
-    <string name="buttonCreateContact">Ajouter un contact</string>
+    <string name="buttonCreateContact">Add a contact</string>
+    <string name="buttonDeleteContact">Delete contact</string>
+
     <string name="toastContactAdded">Contact Added</string>
+    <string name="toastcontactDeleted">Contact deleted</string>
+    <string name="toastUnknowError">Unknow error</string>
 
     <string name="firstname">Firstname</string>
     <string name="lastname">Lastname</string>
     <string name="phone">Phone</string>
     <string name="email">Email</string>
     <string name="city">City</string>
+
 </resources>
