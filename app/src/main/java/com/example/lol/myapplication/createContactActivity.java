@@ -43,6 +43,8 @@ public class createContactActivity extends AppCompatActivity {
                 getInsertedValue(R.id.City)
         ));
 
+        Toast.putToast(getApplicationContext(), getString(R.string.toastContactAdded));
+
 //        intent.putExtra(EXTRA_MESSAGE + "Firstname", getInsertedValue(R.id.Firstname));
 //        intent.putExtra(EXTRA_MESSAGE + "Lastname", getInsertedValue(R.id.Lastname));
 //        intent.putExtra(EXTRA_MESSAGE + "Phone", getInsertedValue(R.id.Phone));
