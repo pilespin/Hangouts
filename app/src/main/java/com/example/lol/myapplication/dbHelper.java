@@ -40,7 +40,6 @@ public class dbHelper extends SQLiteOpenHelper {
     public void insertContact(Contact contact) {
         Log.d("------ MY LG ------ : ", "Called function create contact");
 
-
         SQLiteDatabase bdd = this.getWritableDatabase();
 
         //insert

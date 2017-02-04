@@ -7,8 +7,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.widget.*;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -70,15 +69,6 @@ public class MainActivity extends AppCompatActivity {
         return (allContact);
     }
 
-    ListView mListView;
-    String[] prenoms = new String[]{
-            "Antoine", "Benoit", "Cyril", "David", "Eloise", "Florent",
-            "Gerard", "Hugo", "Ingrid", "Jonathan", "Kevin", "Logan",
-            "Mathieu", "Noemie", "Olivia", "Philippe", "Quentin", "Romain",
-            "Sophie", "Tristan", "Ulric", "Vincent", "Willy", "Xavier",
-            "Yann", "Zoé"
-    };
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,28 +76,33 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d("------ MY LG ------ : ", "On create CALLED of mainActivity");
 
-        List<Contact> allContact = getAllContact();
+        List<Contact>               allContact  = getAllContact();
+        final ArrayList<String>     allname     = new ArrayList<String>();
 
         Iterator i = allContact.iterator();
         while (i.hasNext())
         {
             Contact co = (Contact)i.next();
-            Log.d("------ MY LG ------ : ", co.getFirstname());
-            Log.d("------ MY LG ------ : ", co.getLastname());
-            Log.d("------ MY LG ------ : ", co.getPhone());
-            Log.d("------ MY LG ------ : ", co.getEmail());
-            Log.d("------ MY LG ------ : ", co.getCity());
-
+            allname.add(co.getFirstname() + " " + co.getLastname());
         }
+
         Log.d("------ MY LG ------ : ", "AFTER WHILE PASSED");
         ///////////////////////////////////////////////////////
+        final ListView mListView;
+
         mListView = (ListView) findViewById(R.id.listView);
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.putToast(getApplicationContext(), "Click " + allname.get(position));
+            }
+        });
 
         //android.R.layout.simple_list_item_1 est une vue disponible de base dans le SDK android,
         //Contenant une TextView avec comme identifiant "@android:id/text1"
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this,
-                android.R.layout.simple_list_item_1, prenoms);
+                android.R.layout.simple_list_item_1, allname);
         mListView.setAdapter(adapter);
 
     }
