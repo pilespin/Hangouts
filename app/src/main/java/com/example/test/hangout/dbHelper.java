@@ -123,7 +123,7 @@ public class dbHelper extends SQLiteOpenHelper {
         dbHelper dbHelper = new dbHelper(context);
         SQLiteDatabase bdd = dbHelper.getWritableDatabase();
 
-        Cursor c = bdd.rawQuery("SELECT * FROM contacts", null);
+        Cursor c = bdd.rawQuery("SELECT * FROM contacts ORDER BY firstname ASC", null);
         c.moveToFirst();
 
         List<Contact> allContact = new ArrayList<Contact>();
@@ -137,4 +137,3 @@ public class dbHelper extends SQLiteOpenHelper {
         return (allContact);
     }
 }
-

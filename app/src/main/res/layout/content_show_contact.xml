@@ -24,7 +24,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="deleteContact"
-        android:id="@+id/button" />
+        android:id="@+id/buttonDeleteContact" />
+
+    <Button
+        android:text="@string/buttonModifyContact"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="modifyContact"
+        android:id="@+id/buttonModifyContact" />
 
 </LinearLayout>
 

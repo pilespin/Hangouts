@@ -8,7 +8,8 @@
 
     <string name="button_send">Send</string>
     <string name="buttonCreateContact">Add a contact</string>
-    <string name="buttonDeleteContact">Delete contact</string>
+    <string name="buttonDeleteContact">Delete</string>
+    <string name="buttonModifyContact">Modify</string>
 
     <string name="toastContactAdded">Contact Added</string>
     <string name="toastcontactDeleted">Contact deleted</string>

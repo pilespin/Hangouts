@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 public class CreateContactActivity extends AppCompatActivity {
 
@@ -28,6 +29,34 @@ public class CreateContactActivity extends AppCompatActivity {
 //                        .setAction("Action", null).show();
             }
         });
+
+        /////////////////////
+        Intent intent = getIntent();
+        String firstname = intent.getStringExtra(MainActivity.EXTRA_MESSAGE + "Firstname");
+        String lastname = intent.getStringExtra(MainActivity.EXTRA_MESSAGE + "Lastname");
+        String phone = intent.getStringExtra(MainActivity.EXTRA_MESSAGE + "Phone");
+        String email = intent.getStringExtra(MainActivity.EXTRA_MESSAGE + "Email");
+        String city = intent.getStringExtra(MainActivity.EXTRA_MESSAGE + "City");
+
+        EditText e1 = (EditText)findViewById(R.id.Firstname);
+        e1.setText(firstname, TextView.BufferType.EDITABLE);
+
+        EditText e2 = (EditText)findViewById(R.id.Lastname);
+        e2.setText(lastname, TextView.BufferType.EDITABLE);
+
+        EditText e3 = (EditText)findViewById(R.id.Phone);
+        e3.setText(phone, TextView.BufferType.EDITABLE);
+
+        EditText e4 = (EditText)findViewById(R.id.Email);
+        e4.setText(email, TextView.BufferType.EDITABLE);
+
+        EditText e5 = (EditText)findViewById(R.id.City);
+        e5.setText(city, TextView.BufferType.EDITABLE);
+
+        dbHelper dbHelper = new dbHelper(getBaseContext());
+        dbHelper.deleteContactByPhone(getBaseContext(), phone);
+
+        /////////////////////
     }
 
     public String getInsertedValue(int id) {
