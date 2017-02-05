@@ -1,11 +1,18 @@
-package com.example.lol.myapplication;
+package com.example.test.hangout;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.*;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -19,13 +26,32 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getBaseContext(), CreateContactActivity.class));
+
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+        ////////////////////////////
 
         Log.d("------ MY LG ------ : ", "On create CALLED of mainActivity");
 
         dbHelper dbHelper = new dbHelper(getBaseContext());
 
-        final List<Contact>         allContact  = dbHelper.getAllContact(getBaseContext());
-        final ArrayList<String>     allname     = new ArrayList<String>();
+//        dbHelper.insertContact(new Contact("John", "Doe", "0554656", "", ""));
+//        dbHelper.insertContact(new Contact("Foo", "Bar", "0654656", "", ""));
+//        dbHelper.insertContact(new Contact("Lee", "Kol", "061234", "", ""));
+//        dbHelper.insertContact(new Contact("Mes", "Lev.J", "061237", "", ""));
+
+        final List<Contact> allContact  = dbHelper.getAllContact(getBaseContext());
+        final ArrayList<String> allname     = new ArrayList<String>();
 
         Iterator i = allContact.iterator();
         while (i.hasNext())
@@ -42,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.putToast(getApplicationContext(), "Click " + allname.get(position));
+//                Intent intent = new Intent(MainActivity.this, MainActivity.class);
                 Intent intent = new Intent(MainActivity.this, ShowContactActivity.class);
 
                 intent.putExtra(EXTRA_MESSAGE + "Firstname", allContact.get(position).getFirstname());
@@ -61,34 +88,27 @@ public class MainActivity extends AppCompatActivity {
                 android.R.layout.simple_list_item_1, allname);
         mListView.setAdapter(adapter);
         /////////////////////////
-
     }
 
-    public void createContact(View view) {
-        Log.d("------ MY LOG ------ : ", "The createContactActivity function was called");
-        startActivity(new Intent(this, createContactActivity.class));
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
-
-/////////////////////////////////////////////////////
-
-//        //read
-//        String titre = "Doe";
-//        Cursor c = bdd.query(
-//                "contacts",
-//                new String[] {"firstname", "lastname"},
-//                "lastname LIKE \"" + titre +"\"",
-//                null, null, null, null);
-
-//        Cursor cursor = db.query(
-//                FeedEntry.TABLE_NAME,                     // The table to query
-//                projection,                               // The columns to return
-//                selection,                                // The columns for the WHERE clause
-//                selectionArgs,                            // The values for the WHERE clause
-//                null,                                     // don't group the rows
-//                null,                                     // don't filter by row groups
-//                sortOrder                                 // The sort order
-//        );
-
-
-/////////////////////////////////////////////////////

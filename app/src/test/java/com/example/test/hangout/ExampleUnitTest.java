@@ -1,4 +1,4 @@
-package com.example.lol.myapplication;
+package com.example.test.hangout;
 
 import org.junit.Test;
 

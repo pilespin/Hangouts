@@ -1,4 +1,4 @@
-package com.example.lol.myapplication;
+package com.example.test.hangout;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-import android.widget.EditText;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -138,3 +137,4 @@ public class dbHelper extends SQLiteOpenHelper {
         return (allContact);
     }
 }
+

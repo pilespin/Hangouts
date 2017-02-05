@@ -1,4 +1,4 @@
-package com.example.lol.myapplication;
+package com.example.test.hangout;
 
 /**
  * Created by pilespin on 2/2/17.

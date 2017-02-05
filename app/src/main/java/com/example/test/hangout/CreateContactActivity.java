@@ -1,23 +1,34 @@
-package com.example.lol.myapplication;
+package com.example.test.hangout;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
-public class createContactActivity extends AppCompatActivity {
-
-    public final static String EXTRA_MESSAGE = "com.example.lol.myapplication.";
+public class CreateContactActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_contact);
-    }
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-    /** Called when the user clicks the Send button */
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addContactToDatabase(view);
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+            }
+        });
+    }
 
     public String getInsertedValue(int id) {
 
@@ -35,11 +46,11 @@ public class createContactActivity extends AppCompatActivity {
         dbHelper dbHelper = new dbHelper(this);
 
         boolean ret =   dbHelper.insertContact(new Contact(
-                        getInsertedValue(R.id.Firstname),
-                        getInsertedValue(R.id.Lastname),
-                        getInsertedValue(R.id.Phone),
-                        getInsertedValue(R.id.Email),
-                        getInsertedValue(R.id.City)
+                getInsertedValue(R.id.Firstname),
+                getInsertedValue(R.id.Lastname),
+                getInsertedValue(R.id.Phone),
+                getInsertedValue(R.id.Email),
+                getInsertedValue(R.id.City)
         ));
         if (!ret)
         {
@@ -51,4 +62,5 @@ public class createContactActivity extends AppCompatActivity {
             startActivity(new Intent(this, MainActivity.class));
         }
     }
+
 }
