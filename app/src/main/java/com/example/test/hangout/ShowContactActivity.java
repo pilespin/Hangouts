@@ -1,6 +1,7 @@
 package com.example.test.hangout;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -42,7 +43,37 @@ public class ShowContactActivity extends AppCompatActivity {
 
         setTitle(firstname + " " + lastname);
 
-//        ViewGroup layout = (ViewGroup) findViewById(R.id.activity_show_contact);
-//        layout.addView(textView);
+        String allinfo = "";
+
+        if (firstname.length() > 0) {
+            allinfo += "\n" + firstname;
+        }
+        if (lastname.length() > 0) {
+            allinfo += "\n\n" + lastname;
+        }
+        if (phone.length() > 0) {
+            allinfo += "\n\n" + phone;
+        }
+        if (email.length() > 0) {
+            allinfo += "\n\n" + email;
+        }
+        if (city.length() > 0) {
+            allinfo += "\n\n" + city;
+        }
+
+        TextView tvfname = (TextView) findViewById(R.id.displayContactInformationAll);
+        tvfname.setText(allinfo);
+    }
+
+    public void deleteContact(View view) {
+
+        dbHelper dbHelper = new dbHelper(getBaseContext());
+
+        Intent intent = getIntent();
+        String phone = intent.getStringExtra(MainActivity.EXTRA_MESSAGE + "Phone");
+        dbHelper.deleteContactByPhone(getBaseContext(), phone);
+
+        startActivity(new Intent(this, MainActivity.class));
+
     }
 }

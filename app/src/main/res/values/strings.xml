@@ -4,8 +4,9 @@
     <string name="title_activity_show_contact">ShowContactActivity</string>
 
     <string name="edit_message">Enter a message</string>
-    <string name="button_send">Send</string>
+    <string name="loadingInformation">Loading information</string>
 
+    <string name="button_send">Send</string>
     <string name="buttonCreateContact">Add a contact</string>
     <string name="buttonDeleteContact">Delete contact</string>
 

@@ -133,12 +133,4 @@
         android:layout_alignLeft="@+id/editFirstname"
         android:layout_alignStart="@+id/editFirstname" />
 
-    <!--<Button-->
-        <!--android:text="@string/button_send"-->
-        <!--android:onClick="addContactToDatabase"-->
-        <!--android:layout_centerVertical="true"-->
-        <!--android:layout_centerHorizontal="true"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_width="match_parent" />-->
-
 </LinearLayout>
