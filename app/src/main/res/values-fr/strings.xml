@@ -1,25 +1,25 @@
 <resources>
     <string name="app_name">Hangout</string>
-    <string name="action_settings">Settings</string>
-    <string name="title_activity_show_contact">ShowContact</string>
+    <string name="action_settings">Parametre</string>
+    <string name="title_activity_show_contact">Contact</string>
 
-    <string name="edit_message">Enter a message</string>
-    <string name="loadingInformation">Loading information</string>
+    <string name="edit_message">Entrer un message</string>
+    <string name="loadingInformation">Chargement des informations</string>
 
-    <string name="button_send">Send</string>
-    <string name="buttonCreateContact">Add a contact</string>
-    <string name="buttonDeleteContact">Delete</string>
-    <string name="buttonModifyContact">Modify</string>
+    <string name="button_send">Envoyer</string>
+    <string name="buttonCreateContact">Ajouter contact</string>
+    <string name="buttonDeleteContact">Supprimer</string>
+    <string name="buttonModifyContact">Modifier</string>
 
-    <string name="toastContactAdded">Contact Added</string>
-    <string name="toastcontactDeleted">Contact deleted</string>
-    <string name="toastUnknowError">Unknow error</string>
+    <string name="toastContactAdded">Contact ajouté</string>
+    <string name="toastcontactDeleted">Contact supprimé</string>
+    <string name="toastUnknowError">Erreur inconnue</string>
 
-    <string name="firstname">Firstname</string>
-    <string name="lastname">Lastname</string>
-    <string name="phone">Phone</string>
+    <string name="firstname">Prenom</string>
+    <string name="lastname">Nom de famille</string>
+    <string name="phone">Numero de téléphone</string>
     <string name="email">Email</string>
-    <string name="city">City</string>
+    <string name="city">Ville</string>
 
 
 
@@ -112,5 +112,5 @@
         "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
         "when a user tries to pick up one of cards.\n\n"
     </string>
-    <string name="title_activity_create_contact">Create a Contact</string>
+    <string name="title_activity_create_contact">Ajouter un contact</string>
 </resources>
