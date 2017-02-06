@@ -13,6 +13,12 @@ import android.widget.TextView;
 
 public class CreateContactActivity extends AppCompatActivity {
 
+    private String firstname    = "";
+    private String lastname     = "";
+    private String phone        = "";
+    private String email        = "";
+    private String city         = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,11 +38,11 @@ public class CreateContactActivity extends AppCompatActivity {
 
         /////////////////////
         Intent intent = getIntent();
-        String firstname = intent.getStringExtra(MainActivity.EXTRA_MESSAGE + "Firstname");
-        String lastname = intent.getStringExtra(MainActivity.EXTRA_MESSAGE + "Lastname");
-        String phone = intent.getStringExtra(MainActivity.EXTRA_MESSAGE + "Phone");
-        String email = intent.getStringExtra(MainActivity.EXTRA_MESSAGE + "Email");
-        String city = intent.getStringExtra(MainActivity.EXTRA_MESSAGE + "City");
+        firstname = intent.getStringExtra(MainActivity.EXTRA_MESSAGE + "Firstname");
+        lastname = intent.getStringExtra(MainActivity.EXTRA_MESSAGE + "Lastname");
+        phone = intent.getStringExtra(MainActivity.EXTRA_MESSAGE + "Phone");
+        email = intent.getStringExtra(MainActivity.EXTRA_MESSAGE + "Email");
+        city = intent.getStringExtra(MainActivity.EXTRA_MESSAGE + "City");
 
         EditText e1 = (EditText)findViewById(R.id.Firstname);
         e1.setText(firstname, TextView.BufferType.EDITABLE);
@@ -52,9 +58,6 @@ public class CreateContactActivity extends AppCompatActivity {
 
         EditText e5 = (EditText)findViewById(R.id.City);
         e5.setText(city, TextView.BufferType.EDITABLE);
-
-        dbHelper dbHelper = new dbHelper(getBaseContext());
-        dbHelper.deleteContactByPhone(getBaseContext(), phone);
 
         /////////////////////
     }
@@ -74,6 +77,7 @@ public class CreateContactActivity extends AppCompatActivity {
 
         dbHelper dbHelper = new dbHelper(this);
 
+        dbHelper.deleteContactByPhone(getBaseContext(), phone);
         boolean ret =   dbHelper.insertContact(new Contact(
                 getInsertedValue(R.id.Firstname),
                 getInsertedValue(R.id.Lastname),
@@ -84,6 +88,9 @@ public class CreateContactActivity extends AppCompatActivity {
         if (!ret)
         {
             Toast.putToast(getApplicationContext(), getString(R.string.toastUnknowError));
+            ret = dbHelper.insertContact(new Contact(firstname, lastname, phone, email, city));
+            if (!ret)
+                Toast.putToast(getApplicationContext(), getString(R.string.toastUnknowError));
         }
         else
         {

@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.putToast(getApplicationContext(), "Click " + allname.get(position));
+//                Toast.putToast(getApplicationContext(), "Click " + allname.get(position));
 //                Intent intent = new Intent(MainActivity.this, MainActivity.class);
                 Intent intent = new Intent(MainActivity.this, ShowContactActivity.class);
 

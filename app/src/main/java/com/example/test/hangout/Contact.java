@@ -20,15 +20,15 @@ public class Contact {
         this.email      = "";
         this.city       = "";
 
-        if (firstname.length() > 0)
+        if (firstname != null && firstname.length() > 0)
             this.firstname  = firstname;
-        if (firstname.length() > 0)
+        if (lastname != null && lastname.length() > 0)
             this.lastname   = lastname;
-        if (firstname.length() > 0)
+        if (phone != null && phone.length() > 0)
             this.phone      = phone;
-        if (firstname.length() > 0)
+        if (email != null && email.length() > 0)
             this.email      = email;
-        if (firstname.length() > 0)
+        if (city != null && city.length() > 0)
             this.city       = city;
     }
 

@@ -39,9 +39,9 @@ public class ShowContactActivity extends AppCompatActivity {
         String email = intent.getStringExtra(MainActivity.EXTRA_MESSAGE + "Email");
         String city = intent.getStringExtra(MainActivity.EXTRA_MESSAGE + "City");
 
-        TextView textView = new TextView(this);
-        textView.setTextSize(40);
-        textView.setText(firstname + lastname + phone + email + city);
+//        TextView textView = new TextView(this);
+//        textView.setTextSize(40);
+//        textView.setText(firstname + lastname + phone + email + city);
 
         setTitle(firstname + " " + lastname);
 
