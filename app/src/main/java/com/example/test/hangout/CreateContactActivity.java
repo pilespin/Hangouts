@@ -3,15 +3,13 @@ package com.example.test.hangout;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class CreateContactActivity extends AppCompatActivity {
+public class CreateContactActivity extends BaseClass {
 
     private String firstname    = "";
     private String lastname     = "";
@@ -44,21 +42,25 @@ public class CreateContactActivity extends AppCompatActivity {
         email = intent.getStringExtra(MainActivity.EXTRA_MESSAGE + "Email");
         city = intent.getStringExtra(MainActivity.EXTRA_MESSAGE + "City");
 
-        EditText e1 = (EditText)findViewById(R.id.Firstname);
-        e1.setText(firstname, TextView.BufferType.EDITABLE);
+        if (phone != null) {
+            setTitle(R.string.title_activity_modify_contact);
 
-        EditText e2 = (EditText)findViewById(R.id.Lastname);
-        e2.setText(lastname, TextView.BufferType.EDITABLE);
 
-        EditText e3 = (EditText)findViewById(R.id.Phone);
-        e3.setText(phone, TextView.BufferType.EDITABLE);
+            EditText e1 = (EditText) findViewById(R.id.Firstname);
+            e1.setText(firstname, TextView.BufferType.EDITABLE);
 
-        EditText e4 = (EditText)findViewById(R.id.Email);
-        e4.setText(email, TextView.BufferType.EDITABLE);
+            EditText e2 = (EditText) findViewById(R.id.Lastname);
+            e2.setText(lastname, TextView.BufferType.EDITABLE);
 
-        EditText e5 = (EditText)findViewById(R.id.City);
-        e5.setText(city, TextView.BufferType.EDITABLE);
+            EditText e3 = (EditText) findViewById(R.id.Phone);
+            e3.setText(phone, TextView.BufferType.EDITABLE);
 
+            EditText e4 = (EditText) findViewById(R.id.Email);
+            e4.setText(email, TextView.BufferType.EDITABLE);
+
+            EditText e5 = (EditText) findViewById(R.id.City);
+            e5.setText(city, TextView.BufferType.EDITABLE);
+        }
         /////////////////////
     }
 

@@ -1,17 +1,14 @@
 package com.example.test.hangout;
 
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
-public class ShowContactActivity extends AppCompatActivity {
+public class ShowContactActivity extends BaseClass {
 
     public final static String EXTRA_MESSAGE = "com.example.lol.myapplication.";
 

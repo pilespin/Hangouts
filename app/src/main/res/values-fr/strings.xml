@@ -2,6 +2,8 @@
     <string name="app_name">Hangout</string>
     <string name="action_settings">Parametre</string>
     <string name="title_activity_show_contact">Contact</string>
+    <string name="title_activity_modify_contact">Modifier Contact</string>
+
 
     <string name="edit_message">Entrer un message</string>
     <string name="loadingInformation">Chargement des informations</string>
