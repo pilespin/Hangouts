@@ -25,7 +25,8 @@
         <activity
             android:name=".CreateContactActivity"
             android:label="@string/title_activity_create_contact"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".SendMessageActivity"></activity>
     </application>
 
 </manifest>
