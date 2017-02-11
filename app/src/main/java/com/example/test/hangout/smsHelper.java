@@ -1,14 +1,19 @@
 package com.example.test.hangout;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.telephony.SmsManager;
 import android.telephony.SmsMessage;
+import android.util.Log;
 
 /**
  * Created by pilespin on 2/8/17.
@@ -16,7 +21,7 @@ import android.telephony.SmsMessage;
 
 public class smsHelper extends BroadcastReceiver {
 
-    public static void sendSms(Context context, String phoneNumber, String content) {
+    public void sendSms(Context context, String phoneNumber, String content) {
 
         String SMS_SENT = "SMS_SENT";
         String SMS_DELIVERED = "SMS_DELIVERED";

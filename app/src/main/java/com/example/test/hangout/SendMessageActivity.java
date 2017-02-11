@@ -1,5 +1,10 @@
 package com.example.test.hangout;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.os.SystemClock;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,8 +20,19 @@ public class SendMessageActivity extends AppCompatActivity {
 
     public void buttonSendMessage(View view) {
 
-        smsHelper.sendSms(getBaseContext(), "5556", "Hello World");
-        Log.d("------ BASE ------ : ", "SMS Sended");
+        smsHelper s = new smsHelper();
 
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS},1);
+
+        int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS);
+        if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
+            Log.d("------ BASE ------ : ", "GOOD");
+            s.sendSms(getBaseContext(), "5554", "Hello World");
+        }
+        else
+        {
+            Log.d("------ BASE ------ : ", "You need to allow sending sms to send sms");
+            return;
+        }
     }
 }
