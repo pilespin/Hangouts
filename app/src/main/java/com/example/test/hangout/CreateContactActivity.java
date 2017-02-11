@@ -36,30 +36,32 @@ public class CreateContactActivity extends BaseClass {
 
         /////////////////////
         Intent intent = getIntent();
-        firstname = intent.getStringExtra(MainActivity.EXTRA_MESSAGE + "Firstname");
-        lastname = intent.getStringExtra(MainActivity.EXTRA_MESSAGE + "Lastname");
-        phone = intent.getStringExtra(MainActivity.EXTRA_MESSAGE + "Phone");
-        email = intent.getStringExtra(MainActivity.EXTRA_MESSAGE + "Email");
-        city = intent.getStringExtra(MainActivity.EXTRA_MESSAGE + "City");
 
-        if (phone != null) {
+        Contact c = intentHelper.getContact(intent);
+
+        firstname   = c.getFirstname();
+        lastname    = c .getLastname();
+        phone       = c.getPhone();
+        email       = c.getEmail();
+        city        = c.getCity();
+
+        if (c.getPhone() != null) {
             setTitle(R.string.title_activity_modify_contact);
 
-
             EditText e1 = (EditText) findViewById(R.id.Firstname);
-            e1.setText(firstname, TextView.BufferType.EDITABLE);
+            e1.setText(c.getFirstname(), TextView.BufferType.EDITABLE);
 
             EditText e2 = (EditText) findViewById(R.id.Lastname);
-            e2.setText(lastname, TextView.BufferType.EDITABLE);
+            e2.setText(c.getLastname(), TextView.BufferType.EDITABLE);
 
             EditText e3 = (EditText) findViewById(R.id.Phone);
-            e3.setText(phone, TextView.BufferType.EDITABLE);
+            e3.setText(c.getPhone(), TextView.BufferType.EDITABLE);
 
             EditText e4 = (EditText) findViewById(R.id.Email);
-            e4.setText(email, TextView.BufferType.EDITABLE);
+            e4.setText(c.getEmail(), TextView.BufferType.EDITABLE);
 
             EditText e5 = (EditText) findViewById(R.id.City);
-            e5.setText(city, TextView.BufferType.EDITABLE);
+            e5.setText(c.getCity(), TextView.BufferType.EDITABLE);
         }
         /////////////////////
     }

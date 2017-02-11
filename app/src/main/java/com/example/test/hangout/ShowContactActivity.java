@@ -9,8 +9,6 @@ import android.widget.TextView;
 
 public class ShowContactActivity extends BaseClass {
 
-    public final static String EXTRA_MESSAGE = "com.example.lol.myapplication.";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,36 +26,26 @@ public class ShowContactActivity extends BaseClass {
             }
         });
 
-        /////////////////////////////////////
-        Intent intent = getIntent();
-        String firstname = intent.getStringExtra(MainActivity.EXTRA_MESSAGE + "Firstname");
-        String lastname = intent.getStringExtra(MainActivity.EXTRA_MESSAGE + "Lastname");
-        String phone = intent.getStringExtra(MainActivity.EXTRA_MESSAGE + "Phone");
-        String email = intent.getStringExtra(MainActivity.EXTRA_MESSAGE + "Email");
-        String city = intent.getStringExtra(MainActivity.EXTRA_MESSAGE + "City");
+        Contact c = intentHelper.getContact(getIntent());
 
-//        TextView textView = new TextView(this);
-//        textView.setTextSize(40);
-//        textView.setText(firstname + lastname + phone + email + city);
-
-        setTitle(firstname + " " + lastname);
+        setTitle(c.getFirstname() + " " + c.getLastname());
 
         String allinfo = "";
 
-        if (firstname.length() > 0) {
-            allinfo += "\n" + firstname;
+        if (c.getFirstname().length() > 0) {
+            allinfo += "\n" + c.getFirstname();
         }
-        if (lastname.length() > 0) {
-            allinfo += "\n\n" + lastname;
+        if (c.getLastname().length() > 0) {
+            allinfo += "\n\n" + c.getLastname();
         }
-        if (phone.length() > 0) {
-            allinfo += "\n\n" + phone;
+        if (c.getPhone().length() > 0) {
+            allinfo += "\n\n" + c.getPhone();
         }
-        if (email.length() > 0) {
-            allinfo += "\n\n" + email;
+        if (c.getEmail().length() > 0) {
+            allinfo += "\n\n" + c.getEmail();
         }
-        if (city.length() > 0) {
-            allinfo += "\n\n" + city;
+        if (c.getCity().length() > 0) {
+            allinfo += "\n\n" + c.getCity();
         }
 
         TextView tvfname = (TextView) findViewById(R.id.displayContactInformationAll);
@@ -69,8 +57,8 @@ public class ShowContactActivity extends BaseClass {
         dbHelper dbHelper = new dbHelper(getBaseContext());
 
         Intent intent = getIntent();
-        String phone = intent.getStringExtra(MainActivity.EXTRA_MESSAGE + "Phone");
-        dbHelper.deleteContactByPhone(getBaseContext(), phone);
+        Contact c = intentHelper.getContact(intent);
+        dbHelper.deleteContactByPhone(getBaseContext(), c.getPhone());
 
         startActivity(new Intent(this, MainActivity.class));
 
@@ -81,11 +69,9 @@ public class ShowContactActivity extends BaseClass {
         Intent oldintent = getIntent();
         Intent newintent = new Intent(getBaseContext(), CreateContactActivity.class);
 
-        newintent.putExtra(EXTRA_MESSAGE + "Firstname", oldintent.getStringExtra(MainActivity.EXTRA_MESSAGE + "Firstname"));
-        newintent.putExtra(EXTRA_MESSAGE + "Lastname", oldintent.getStringExtra(MainActivity.EXTRA_MESSAGE + "Lastname"));
-        newintent.putExtra(EXTRA_MESSAGE + "Phone", oldintent.getStringExtra(MainActivity.EXTRA_MESSAGE + "Phone"));
-        newintent.putExtra(EXTRA_MESSAGE + "Email", oldintent.getStringExtra(MainActivity.EXTRA_MESSAGE + "Email"));
-        newintent.putExtra(EXTRA_MESSAGE + "City", oldintent.getStringExtra(MainActivity.EXTRA_MESSAGE + "City"));
+        Contact c = intentHelper.getContact(oldintent);
+
+        intentHelper.putContact(newintent, c);
 
         startActivity(newintent);
 

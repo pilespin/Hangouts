@@ -19,8 +19,6 @@ import java.util.List;
 
 public class MainActivity extends BaseClass {
 
-    public final static String EXTRA_MESSAGE = "com.example.lol.myapplication.";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,11 +68,11 @@ public class MainActivity extends BaseClass {
 //                Intent intent = new Intent(MainActivity.this, MainActivity.class);
                 Intent intent = new Intent(MainActivity.this, ShowContactActivity.class);
 
-                intent.putExtra(EXTRA_MESSAGE + "Firstname", allContact.get(position).getFirstname());
-                intent.putExtra(EXTRA_MESSAGE + "Lastname", allContact.get(position).getLastname());
-                intent.putExtra(EXTRA_MESSAGE + "Phone", allContact.get(position).getPhone());
-                intent.putExtra(EXTRA_MESSAGE + "Email", allContact.get(position).getEmail());
-                intent.putExtra(EXTRA_MESSAGE + "City", allContact.get(position).getCity());
+                intentHelper.putOnceKey(intent, "Firstname", allContact.get(position).getFirstname());
+                intentHelper.putOnceKey(intent, "Lastname", allContact.get(position).getLastname());
+                intentHelper.putOnceKey(intent, "Phone", allContact.get(position).getPhone());
+                intentHelper.putOnceKey(intent, "Email", allContact.get(position).getEmail());
+                intentHelper.putOnceKey(intent, "City", allContact.get(position).getCity());
 
                 startActivity(intent);
             }
