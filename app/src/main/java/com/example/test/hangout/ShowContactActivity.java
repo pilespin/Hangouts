@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 public class ShowContactActivity extends BaseClass {
 
+    Contact contact = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -16,11 +18,17 @@ public class ShowContactActivity extends BaseClass {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        contact = intentHelper.getContact(getIntent());
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getBaseContext(), SendMessageActivity.class));
+
+                Intent intent = new Intent(getBaseContext(), SendMessageActivity.class);
+
+                intentHelper.putContact(intent, contact);
+                startActivity(intent);
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
             }
@@ -56,9 +64,9 @@ public class ShowContactActivity extends BaseClass {
 
         dbHelper dbHelper = new dbHelper(getBaseContext());
 
-        Intent intent = getIntent();
-        Contact c = intentHelper.getContact(intent);
-        dbHelper.deleteContactByPhone(getBaseContext(), c.getPhone());
+//        Intent intent = getIntent();
+//        contact = intentHelper.getContact(intent);
+        dbHelper.deleteContactByPhone(getBaseContext(), contact.getPhone());
 
         startActivity(new Intent(this, MainActivity.class));
 
@@ -69,9 +77,8 @@ public class ShowContactActivity extends BaseClass {
         Intent oldintent = getIntent();
         Intent newintent = new Intent(getBaseContext(), CreateContactActivity.class);
 
-        Contact c = intentHelper.getContact(oldintent);
-
-        intentHelper.putContact(newintent, c);
+        contact = intentHelper.getContact(oldintent);
+        intentHelper.putContact(newintent, contact);
 
         startActivity(newintent);
 

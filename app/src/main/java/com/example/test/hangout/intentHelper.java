@@ -1,6 +1,8 @@
 package com.example.test.hangout;
 
+import android.content.Context;
 import android.content.Intent;
+import android.widget.EditText;
 
 /**
  * Created by pilespin on 2/11/17.
@@ -33,4 +35,5 @@ public class intentHelper {
     public static void putOnceKey(Intent intent, String key, String content) {
         intent.putExtra(EXTRA_MESSAGE + key, content);
     }
+
 }

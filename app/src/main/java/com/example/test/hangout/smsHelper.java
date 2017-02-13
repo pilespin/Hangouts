@@ -21,7 +21,25 @@ import android.util.Log;
 
 public class smsHelper extends BroadcastReceiver {
 
+    public final int SMS_MAX_LENGTH = 160;
+
     public void sendSms(Context context, String phoneNumber, String content) {
+
+        if (phoneNumber == null || phoneNumber.length() <= 0)
+        {
+            Toast.putToast(context, "Text is too long");
+            return;
+        }
+        if (content == null || content.length() <= 0)
+        {
+            Toast.putToast(context, "Text is empty");
+            return;
+        }
+        if (content == null || content.length() > SMS_MAX_LENGTH)
+        {
+            Toast.putToast(context, "Text is too long");
+            return;
+        }
 
         String SMS_SENT = "SMS_SENT";
         String SMS_DELIVERED = "SMS_DELIVERED";

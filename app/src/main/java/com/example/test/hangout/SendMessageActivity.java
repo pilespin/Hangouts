@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 
 public class SendMessageActivity extends AppCompatActivity {
 
@@ -26,8 +27,12 @@ public class SendMessageActivity extends AppCompatActivity {
 
         int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS);
         if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
-            Log.d("------ BASE ------ : ", "GOOD");
-            s.sendSms(getBaseContext(), "5554", "Hello World");
+
+            String content = lib.getInsertedValue((EditText)findViewById(R.id.message_content));
+            Contact c = intentHelper.getContact(getIntent());
+
+            s.sendSms(getBaseContext(), c.getPhone(), content);
+
         }
         else
         {
