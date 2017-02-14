@@ -10,6 +10,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
+
+import java.util.Iterator;
+import java.util.List;
 
 public class SendMessageActivity extends AppCompatActivity {
 
@@ -17,6 +21,26 @@ public class SendMessageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_send_message);
+        Contact c = intentHelper.getContact(getIntent());
+
+        setTitle(c.getFirstname() + " " + c.getLastname());
+
+//        TextView tvfname = (TextView) findViewById(R.id.displayAllSms);
+
+//        dbHelper dbHelper = new dbHelper(getBaseContext());
+//
+//        List<sms> allSms = dbHelper.getSmsByPhone(getBaseContext(), c.getPhone());
+//
+//        String allTextSms = "";
+//
+//        Iterator i = allSms.iterator();
+//        while (i.hasNext())
+//        {
+//            sms s = (sms)i.next();
+//            allTextSms += s.getContent() + "\n";
+//        }
+//
+//        tvfname.setText(allTextSms);
     }
 
     public void buttonSendMessage(View view) {

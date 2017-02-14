@@ -100,6 +100,7 @@ public class smsHelper extends BroadcastReceiver {
         Bundle bundle = intent.getExtras();
         SmsMessage[] msgs = null;
         String str = "";
+        String phone = "";
         if (bundle != null)
         {
             //---retrieve the SMS message received---
@@ -107,12 +108,25 @@ public class smsHelper extends BroadcastReceiver {
             msgs = new SmsMessage[pdus.length];
             for (int i=0; i<msgs.length; i++){
                 msgs[i] = SmsMessage.createFromPdu((byte[])pdus[i]);
+                phone = msgs[i].getOriginatingAddress();
                 str += "SMS from " + msgs[i].getOriginatingAddress();
                 str += " :";
                 str += msgs[i].getMessageBody().toString();
             }
+            abortBroadcast();
             //---display the new SMS message---
             Toast.putToast(context, str);
+//            dbHelper db = new dbHelper(context);
+//            if (db.insertSms("15555215556", "Helloworld") == false)
+////                if (db.insertSms(phone, str) == false)
+//            {
+//                Log.d("------ SMS ------ : ", "Sms not save in database");
+//            }
+//            else
+//            {
+//                Log.d("------ SMS ------ : ", "Sms save in database");
+//            }
+
         }
     }
 

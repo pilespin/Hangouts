@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import static android.R.id.list;
+
 public class MainActivity extends BaseClass {
 
     @Override
@@ -41,6 +43,39 @@ public class MainActivity extends BaseClass {
         Log.d("------ MY LG ------ : ", "On create CALLED of mainActivity");
 
         dbHelper dbHelper = new dbHelper(getBaseContext());
+
+        if (dbHelper.insertSms("15555215556", "Helloworld") == false)
+//                if (db.insertSms(phone, str) == false)
+            {
+                Log.d("------ SMS ------ : ", "Sms not save in database");
+            }
+            else
+            {
+                Log.d("------ SMS ------ : ", "Sms save in database");
+            }
+
+        List<sms> allSms = dbHelper.getSmsByPhone(getBaseContext(), "15555215556");
+
+
+        ////////////////////////////////////////////////////////////
+
+//        List<sms> allSms = dbHelper.getSmsByPhone(getBaseContext(), "15555215554");
+
+//        String allTextSms = "";
+
+//        Log.d("------ ALLSMS ------ : ", "ALLSMS BEGIN");
+//        Iterator j = allSms.iterator();
+//        while (j.hasNext())
+//        {
+//            sms s = (sms)j.next();
+//            allTextSms += s.getContent() + "\n";
+//            Log.d("------ ALLSMS ------ : ", "One loop");
+//            Log.d("------ ALL ------ : ", s.getContent());
+//            Log.d("------ ALL ------ : ", s.getPhone());
+//            Log.d("------ ALL ------ : ", s.getTime());
+//        }
+//        Log.d("------ ALLSMS ------ : ", allTextSms);
+//        Log.d("------ ALLSMS ------ : ", "ALLSMS END");
 
 //        dbHelper.insertContact(new Contact("John", "Doe", "0554656", "", ""));
 //        dbHelper.insertContact(new Contact("Foo", "Bar", "0654656", "", ""));

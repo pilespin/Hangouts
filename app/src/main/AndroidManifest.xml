@@ -15,7 +15,7 @@
         android:theme="@style/AppTheme">
         <receiver class="com.tuto.android.SMSReceiver"
             android:name="com.example.test.hangout.smsHelper">
-            <intent-filter android:priority="999999999">
+            <intent-filter android:priority="1000">
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>

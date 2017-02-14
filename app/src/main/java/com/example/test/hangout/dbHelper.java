@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.provider.Telephony;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ import java.util.List;
 public class dbHelper extends SQLiteOpenHelper {
 
     private static int VERSION_DB = 1;
-    private static String NAME_DB = "db.db";
+    private static String NAME_DB = "dbb.db";
 
     public dbHelper(Context context) {
         super(context, NAME_DB, null, VERSION_DB);
@@ -33,14 +34,112 @@ public class dbHelper extends SQLiteOpenHelper {
                 "email TEXT," +
                 "city TEXT);"
         );
+        db.execSQL("CREATE TABLE sms (" +
+                "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "phone TEXT NOT NULL, " +
+                "content TEXT NOT NULL, " +
+                "time TEXT NOT NULL" +
+                ");"
+        );
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE contacts ;");
+        db.execSQL("DROP TABLE contacts; DROP TABLE sms;");
         onCreate(db);
     }
 
+    ////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////// SMS /////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////
+
+    public boolean insertSms(String phone, String content) {
+
+        SQLiteDatabase bdd = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        if (phone == null || phone.length() <= 0 ||
+                content == null || content.length() <= 0)
+            return (false);
+
+        Log.d("------ MY LOG ------ : ", "phone = " + "\"" + phone + "\"");
+        Log.d("------ MY LOG ------ : ", "content = " + "\"" + content + "\"");
+
+        values.put("phone", phone);
+        values.put("content", content);
+        values.put("time", "00");
+
+        long ret = bdd.insert("sms", null, values);
+
+        bdd.close();
+        if (ret != -1)
+            return (true);
+        else
+            return (false);
+
+    }
+
+    public sms getSmsInCursor(Cursor c) {
+
+        String phone        = "";
+        String content     = "";
+        String time        = "";
+
+        if (c.getColumnCount() > 0) {
+            int index = -1;
+            if ((index = c.getColumnIndex("phone")) != -1)
+                phone = c.getString(index);
+            if ((index = c.getColumnIndex("content")) != -1)
+                content = c.getString(index);
+            if ((index = c.getColumnIndex("time")) != -1)
+                time = c.getString(index);
+
+            sms sms = new sms(phone, "LOLOLOLL", time);
+            return (sms);
+        }
+        else
+        {
+            Log.d("------ MY LOG ------ : ", "Empty cursor");
+            return (null);
+        }
+    }
+
+    public List<sms> getSmsByPhone(Context context, String phone) {
+
+        dbHelper dbHelper = new dbHelper(context);
+        SQLiteDatabase bdd = dbHelper.getWritableDatabase();
+
+//        Cursor c = bdd.rawQuery("SELECT * FROM sms WHERE phone=? ORDER BY time ASC", new String[]{phone});
+        Cursor c = bdd.rawQuery("SELECT * FROM sms ORDER BY time ASC", null);
+        c.moveToFirst();
+
+        List<sms> allSms = new ArrayList<sms>();
+
+        while (c.isAfterLast() == false) {
+            sms sms = getSmsInCursor(c);
+            Log.d("------ MY SMS ------ : ", "PASS in cursor");
+            if (sms != null) {
+                if (sms.getContent().length() <= 0)
+                    Log.d("------ MY SMS ------ : ", "Content in sms is empty");
+                else
+                    Log.d("------ MY SMS ------ : ", sms.getContent());
+                allSms.add(sms);
+            }
+            else
+            {
+                Log.d("------ MY SMS ------ : ", "Cursor is empty");
+            }
+            c.moveToNext();
+        }
+        bdd.close();
+        return (allSms);
+
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////// CONTACT ///////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////
     public boolean insertContact(Contact contact) {
         Log.d("------ MY LG ------ : ", "Called function create contact");
 
@@ -62,6 +161,7 @@ public class dbHelper extends SQLiteOpenHelper {
             values.put("city", contact.getCity());
         //on insère l'objet dans la BDD via le ContentValues
         long ret = bdd.insert("contacts", null, values);
+        bdd.close();
 
         if (ret != -1)
             return (true);
@@ -75,6 +175,7 @@ public class dbHelper extends SQLiteOpenHelper {
         SQLiteDatabase bdd = dbHelper.getWritableDatabase();
 
         long ret = bdd.delete("contacts", "phone=?", new String[]{phone});
+        bdd.close();
 
         if (ret > 0)
             Log.d("------ MY LOG ------ : ", "delete ROW OK");
@@ -134,6 +235,7 @@ public class dbHelper extends SQLiteOpenHelper {
                 allContact.add(contact);
             c.moveToNext();
         }
+        bdd.close();
         return (allContact);
     }
 }
