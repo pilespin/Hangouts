@@ -1,9 +1,13 @@
 package com.example.test.hangout;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -11,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -28,6 +33,22 @@ public class MainActivity extends BaseClass {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        /////////////////////////////// PERMISSION ///////////////////////////////////
+
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS},1);
+
+        int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS);
+        if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
+            Toast.putToast(getBaseContext() ,"Good now you can send and receive sms");
+        }
+        else
+        {
+            Toast.putToast(getBaseContext(), "Bad");
+            Log.d("------ BASE ------ : ", "You need to allow sending sms to send sms");
+        }
+
+        //////////////////////////////////////////////////////////////////////////////
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,38 +65,39 @@ public class MainActivity extends BaseClass {
 
         dbHelper dbHelper = new dbHelper(getBaseContext());
 
-        if (dbHelper.insertSms("15555215556", "Helloworld") == false)
-//                if (db.insertSms(phone, str) == false)
-            {
-                Log.d("------ SMS ------ : ", "Sms not save in database");
-            }
-            else
-            {
-                Log.d("------ SMS ------ : ", "Sms save in database");
-            }
+//        if (dbHelper.insertSms("15555215556", "Helloworld") == false)
+////                if (db.insertSms(phone, str) == false)
+//            {
+//                Log.d("------ SMS ------ : ", "Sms not save in database");
+//            }
+//            else
+//            {
+//                Log.d("------ SMS ------ : ", "Sms save in database");
+//            }
 
-        List<sms> allSms = dbHelper.getSmsByPhone(getBaseContext(), "15555215556");
+        List<sms> allSms = dbHelper.getSmsAll(getBaseContext());
 
 
         ////////////////////////////////////////////////////////////
 
 //        List<sms> allSms = dbHelper.getSmsByPhone(getBaseContext(), "15555215554");
 
-//        String allTextSms = "";
+        String allTextSms = "";
 
-//        Log.d("------ ALLSMS ------ : ", "ALLSMS BEGIN");
-//        Iterator j = allSms.iterator();
-//        while (j.hasNext())
-//        {
-//            sms s = (sms)j.next();
-//            allTextSms += s.getContent() + "\n";
-//            Log.d("------ ALLSMS ------ : ", "One loop");
-//            Log.d("------ ALL ------ : ", s.getContent());
-//            Log.d("------ ALL ------ : ", s.getPhone());
-//            Log.d("------ ALL ------ : ", s.getTime());
-//        }
-//        Log.d("------ ALLSMS ------ : ", allTextSms);
-//        Log.d("------ ALLSMS ------ : ", "ALLSMS END");
+        Log.d("------ ALLSMS ------ : ", "ALLSMS BEGIN");
+        Iterator j = allSms.iterator();
+        while (j.hasNext())
+        {
+            sms s = (sms)j.next();
+            allTextSms += s.getContent() + "\n";
+            Log.d("------ ALLSMS ------ : ", "oooooooooooooooooooooooo");
+            Log.d("------ FROM ------ : ", s.getFromPhone());
+            Log.d("------ TO ------ : ", s.getToPhone());
+            Log.d("------ CONTENT------ : ", s.getContent());
+            Log.d("------ TIME ------ : ", s.getTime());
+        }
+        Log.d("------ ALLSMS ------ : ", allTextSms);
+        Log.d("------ ALLSMS ------ : ", "ALLSMS END");
 
 //        dbHelper.insertContact(new Contact("John", "Doe", "0554656", "", ""));
 //        dbHelper.insertContact(new Contact("Foo", "Bar", "0654656", "", ""));

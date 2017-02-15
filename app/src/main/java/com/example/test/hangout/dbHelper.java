@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.Telephony;
+import android.text.format.Time;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -18,7 +19,14 @@ import java.util.List;
 public class dbHelper extends SQLiteOpenHelper {
 
     private static int VERSION_DB = 1;
-    private static String NAME_DB = "dbb.db";
+    private static String NAME_DB = "db.db";
+
+    public String getTimeNow() {
+
+        Time time = new Time();   time.setToNow();
+        String currentTime = time.format2445();
+        return (currentTime);
+    }
 
     public dbHelper(Context context) {
         super(context, NAME_DB, null, VERSION_DB);
@@ -36,7 +44,8 @@ public class dbHelper extends SQLiteOpenHelper {
         );
         db.execSQL("CREATE TABLE sms (" +
                 "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "phone TEXT NOT NULL, " +
+                "fromPhone TEXT, " +
+                "toPhone TEXT, " +
                 "content TEXT NOT NULL, " +
                 "time TEXT NOT NULL" +
                 ");"
@@ -53,22 +62,22 @@ public class dbHelper extends SQLiteOpenHelper {
     ////////////////////////////////////// SMS /////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
 
-    public boolean insertSms(String phone, String content) {
+    public boolean insertSms(String fromPhone, String toPhone, String content) {
 
         SQLiteDatabase bdd = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
 
-        if (phone == null || phone.length() <= 0 ||
-                content == null || content.length() <= 0)
+        if (content == null || content.length() <= 0)
             return (false);
 
-        Log.d("------ MY LOG ------ : ", "phone = " + "\"" + phone + "\"");
-        Log.d("------ MY LOG ------ : ", "content = " + "\"" + content + "\"");
+//        Log.d("------ MY LOG ------ : ", "phone = " + "\"" + fromPhone + "\"");
+//        Log.d("------ MY LOG ------ : ", "content = " + "\"" + content + "\"");
 
-        values.put("phone", phone);
+        values.put("fromPhone", fromPhone);
+        values.put("toPhone", toPhone);
         values.put("content", content);
-        values.put("time", "00");
+        values.put("time", getTimeNow());
 
         long ret = bdd.insert("sms", null, values);
 
@@ -82,20 +91,23 @@ public class dbHelper extends SQLiteOpenHelper {
 
     public sms getSmsInCursor(Cursor c) {
 
-        String phone        = "";
+        String fromPhone   = "";
+        String toPhone     = "";
         String content     = "";
         String time        = "";
 
         if (c.getColumnCount() > 0) {
             int index = -1;
-            if ((index = c.getColumnIndex("phone")) != -1)
-                phone = c.getString(index);
+            if ((index = c.getColumnIndex("fromPhone")) != -1)
+                fromPhone = c.getString(index);
+            if ((index = c.getColumnIndex("toPhone")) != -1)
+                toPhone = c.getString(index);
             if ((index = c.getColumnIndex("content")) != -1)
                 content = c.getString(index);
             if ((index = c.getColumnIndex("time")) != -1)
                 time = c.getString(index);
 
-            sms sms = new sms(phone, "LOLOLOLL", time);
+            sms sms = new sms(fromPhone, toPhone, content, time);
             return (sms);
         }
         else
@@ -110,7 +122,39 @@ public class dbHelper extends SQLiteOpenHelper {
         dbHelper dbHelper = new dbHelper(context);
         SQLiteDatabase bdd = dbHelper.getWritableDatabase();
 
-//        Cursor c = bdd.rawQuery("SELECT * FROM sms WHERE phone=? ORDER BY time ASC", new String[]{phone});
+        Cursor c = bdd.rawQuery("SELECT * FROM sms WHERE toPhone=? ORDER BY time ASC", new String[]{phone});
+//        Cursor c = bdd.rawQuery("SELECT * FROM sms ORDER BY time ASC", null);
+        c.moveToFirst();
+
+        List<sms> allSms = new ArrayList<sms>();
+
+        while (c.isAfterLast() == false) {
+            sms sms = getSmsInCursor(c);
+            Log.d("------ MY SMS ------ : ", "PASS in cursor");
+            if (sms != null) {
+
+//                if (sms.getContent().length() <= 0)
+//                    Log.d("------ MY SMS ------ : ", "Content in sms is empty");
+//                else
+//                    Log.d("------ MY SMS ------ : ", sms.getContent());
+                allSms.add(sms);
+            }
+            else
+            {
+                Log.d("------ MY SMS ------ : ", "Cursor is empty");
+            }
+            c.moveToNext();
+        }
+        bdd.close();
+        return (allSms);
+
+    }
+
+    public List<sms> getSmsAll(Context context) {
+
+        dbHelper dbHelper = new dbHelper(context);
+        SQLiteDatabase bdd = dbHelper.getWritableDatabase();
+
         Cursor c = bdd.rawQuery("SELECT * FROM sms ORDER BY time ASC", null);
         c.moveToFirst();
 
@@ -120,10 +164,11 @@ public class dbHelper extends SQLiteOpenHelper {
             sms sms = getSmsInCursor(c);
             Log.d("------ MY SMS ------ : ", "PASS in cursor");
             if (sms != null) {
-                if (sms.getContent().length() <= 0)
-                    Log.d("------ MY SMS ------ : ", "Content in sms is empty");
-                else
-                    Log.d("------ MY SMS ------ : ", sms.getContent());
+
+//                if (sms.getContent().length() <= 0)
+//                    Log.d("------ MY SMS ------ : ", "Content in sms is empty");
+//                else
+//                    Log.d("------ MY SMS ------ : ", sms.getContent());
                 allSms.add(sms);
             }
             else

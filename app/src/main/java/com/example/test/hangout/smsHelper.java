@@ -14,6 +14,7 @@ import android.support.v4.content.ContextCompat;
 import android.telephony.SmsManager;
 import android.telephony.SmsMessage;
 import android.util.Log;
+import android.widget.EditText;
 
 /**
  * Created by pilespin on 2/8/17.
@@ -24,6 +25,12 @@ public class smsHelper extends BroadcastReceiver {
     public final int SMS_MAX_LENGTH = 160;
 
     public void sendSms(Context context, String phoneNumber, String content) {
+
+        int permissionCheck = ContextCompat.checkSelfPermission(context, Manifest.permission.SEND_SMS);
+        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+            Toast.putToast(context, "You need permission for this");
+            return;
+        }
 
         if (phoneNumber == null || phoneNumber.length() <= 0)
         {
@@ -99,8 +106,9 @@ public class smsHelper extends BroadcastReceiver {
         //---get the SMS message passed in---
         Bundle bundle = intent.getExtras();
         SmsMessage[] msgs = null;
-        String str = "";
-        String phone = "";
+        String content = "";
+        String fromPhone = "";
+        String toast = "";
         if (bundle != null)
         {
             //---retrieve the SMS message received---
@@ -108,24 +116,19 @@ public class smsHelper extends BroadcastReceiver {
             msgs = new SmsMessage[pdus.length];
             for (int i=0; i<msgs.length; i++){
                 msgs[i] = SmsMessage.createFromPdu((byte[])pdus[i]);
-                phone = msgs[i].getOriginatingAddress();
-                str += "SMS from " + msgs[i].getOriginatingAddress();
-                str += " :";
-                str += msgs[i].getMessageBody().toString();
+                fromPhone = msgs[i].getOriginatingAddress();
+                toast = "New SMS from " + fromPhone;
+                content += msgs[i].getMessageBody().toString();
             }
             abortBroadcast();
             //---display the new SMS message---
-            Toast.putToast(context, str);
-//            dbHelper db = new dbHelper(context);
-//            if (db.insertSms("15555215556", "Helloworld") == false)
-////                if (db.insertSms(phone, str) == false)
-//            {
-//                Log.d("------ SMS ------ : ", "Sms not save in database");
-//            }
-//            else
-//            {
-//                Log.d("------ SMS ------ : ", "Sms save in database");
-//            }
+            Toast.putToast(context, toast);
+            dbHelper db = new dbHelper(context);
+            if (db.insertSms("IN", fromPhone, content) == false)
+//                if (db.insertSms(fromPhone, null, content) == false)
+                Log.d("------ SMS ------ : ", "Sms not save in database");
+            else
+                Log.d("------ SMS ------ : ", "Sms save in database");
 
         }
     }

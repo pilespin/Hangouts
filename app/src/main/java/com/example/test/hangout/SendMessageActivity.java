@@ -1,6 +1,7 @@
 package com.example.test.hangout;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.SystemClock;
 import android.support.v4.app.ActivityCompat;
@@ -10,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import java.util.Iterator;
@@ -21,47 +23,58 @@ public class SendMessageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_send_message);
-        Contact c = intentHelper.getContact(getIntent());
 
+        Contact c = intentHelper.getContact(getIntent());
         setTitle(c.getFirstname() + " " + c.getLastname());
 
-//        TextView tvfname = (TextView) findViewById(R.id.displayAllSms);
+        TextView tvfname = (TextView) findViewById(R.id.displayAllSms);
 
-//        dbHelper dbHelper = new dbHelper(getBaseContext());
-//
-//        List<sms> allSms = dbHelper.getSmsByPhone(getBaseContext(), c.getPhone());
-//
-//        String allTextSms = "";
-//
-//        Iterator i = allSms.iterator();
-//        while (i.hasNext())
-//        {
-//            sms s = (sms)i.next();
-//            allTextSms += s.getContent() + "\n";
-//        }
-//
-//        tvfname.setText(allTextSms);
+        dbHelper dbHelper = new dbHelper(getBaseContext());
+
+        List<sms> allSms = dbHelper.getSmsByPhone(getBaseContext(), c.getPhone());
+
+        String allTextSms = "";
+
+        Iterator i = allSms.iterator();
+        while (i.hasNext())
+        {
+            sms s = (sms)i.next();
+            allTextSms += "//////////////////////\n";
+            if (s.getFromPhone().compareTo("OUT") == 0)
+                allTextSms += "sended " + "\n";
+            else if (s.getFromPhone().compareTo("IN") == 0)
+                allTextSms += "received " + "\n";
+//            allTextSms += s.getToPhone() + "\n";
+            allTextSms += s.getTime() + "\n";
+            allTextSms += s.getContent() + "\n";
+        }
+
+        tvfname.setText(allTextSms);
+
+        ScrollView scroll = (ScrollView) this.findViewById(R.id.activity_send_message);
+        scroll.fullScroll(View.FOCUS_DOWN);
+//        scroll.fullScroll(scroll.FOCUS_DOWN);
+//        scroll.scrollTo(0, 5000);
+//        scroll.fullScroll(scroll.getBottom());
     }
 
     public void buttonSendMessage(View view) {
 
         smsHelper s = new smsHelper();
 
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS},1);
+        String content = lib.getInsertedValue((EditText)findViewById(R.id.message_content));
+        Contact c = intentHelper.getContact(getIntent());
 
-        int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS);
-        if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
+        s.sendSms(getBaseContext(), c.getPhone(), content);
 
-            String content = lib.getInsertedValue((EditText)findViewById(R.id.message_content));
-            Contact c = intentHelper.getContact(getIntent());
-
-            s.sendSms(getBaseContext(), c.getPhone(), content);
-
-        }
+        dbHelper db = new dbHelper(getBaseContext());
+        if (db.insertSms("OUT", c.getPhone(), content) == false)
+            Log.d("------ SMS ------ : ", "Sms not save in database");
         else
-        {
-            Log.d("------ BASE ------ : ", "You need to allow sending sms to send sms");
-            return;
-        }
+            Log.d("------ SMS ------ : ", "Sms save in database");
+
+        Intent intent = new Intent(getBaseContext(), MainActivity.class);
+//        intentHelper.putContact(intent, c);
+        startActivity(intent);
     }
 }

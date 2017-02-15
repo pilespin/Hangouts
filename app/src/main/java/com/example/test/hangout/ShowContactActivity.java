@@ -64,8 +64,6 @@ public class ShowContactActivity extends BaseClass {
 
         dbHelper dbHelper = new dbHelper(getBaseContext());
 
-//        Intent intent = getIntent();
-//        contact = intentHelper.getContact(intent);
         dbHelper.deleteContactByPhone(getBaseContext(), contact.getPhone());
 
         startActivity(new Intent(this, MainActivity.class));

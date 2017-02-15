@@ -6,35 +6,40 @@ package com.example.test.hangout;
 
 public class sms {
 
-    private String phone    = "";
-    private String content  = "";
-    private String time     = "";
+    private String fromPhone    = "";
+    private String toPhone      = "";
+    private String content      = "";
+    private String time         = "";
 
-    public sms(String phone, String content, String time) {
+    public sms(String fromPhone, String toPhone, String content, String time) {
 
-        phone   = "";
-        content = "";
-        time    = "";
-
-        if (phone != null && phone.length() > 0)
-            this.phone = phone;
+        if (fromPhone != null && fromPhone.length() > 0)
+            this.fromPhone = fromPhone;
+        if (toPhone != null && toPhone.length() > 0)
+            this.toPhone = toPhone;
         if (content != null && content.length() > 0)
             this.content = content;
         if (time != null && time.length() > 0)
-            this.content = time;
+            this.time = time;
     }
 
     public String getContent()    {
-//        return ("Hello123");
         if (this.content != null)
             return (this.content);
         else
             return ("");
     }
 
-    public String getPhone()    {
-        if (this.phone != null)
-            return (this.phone);
+    public String getFromPhone()    {
+        if (this.fromPhone != null)
+            return (this.fromPhone);
+        else
+            return ("");
+    }
+
+    public String getToPhone()    {
+        if (this.toPhone != null)
+            return (this.toPhone);
         else
             return ("");
     }
