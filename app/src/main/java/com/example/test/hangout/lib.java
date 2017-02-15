@@ -8,6 +8,13 @@ import android.widget.EditText;
 
 public class lib {
 
+    public static String getString(String str)    {
+        if (str != null && str.length() > 0)
+            return (str);
+        else
+            return ("");
+    }
+
     public static String getInsertedValue(EditText e) {
 
 //        EditText editText = (EditText)findViewById(id);

@@ -64,23 +64,7 @@ public class MainActivity extends BaseClass {
         Log.d("------ MY LG ------ : ", "On create CALLED of mainActivity");
 
         dbHelper dbHelper = new dbHelper(getBaseContext());
-
-//        if (dbHelper.insertSms("15555215556", "Helloworld") == false)
-////                if (db.insertSms(phone, str) == false)
-//            {
-//                Log.d("------ SMS ------ : ", "Sms not save in database");
-//            }
-//            else
-//            {
-//                Log.d("------ SMS ------ : ", "Sms save in database");
-//            }
-
         List<sms> allSms = dbHelper.getSmsAll(getBaseContext());
-
-
-        ////////////////////////////////////////////////////////////
-
-//        List<sms> allSms = dbHelper.getSmsByPhone(getBaseContext(), "15555215554");
 
         String allTextSms = "";
 
@@ -91,8 +75,8 @@ public class MainActivity extends BaseClass {
             sms s = (sms)j.next();
             allTextSms += s.getContent() + "\n";
             Log.d("------ ALLSMS ------ : ", "oooooooooooooooooooooooo");
-            Log.d("------ FROM ------ : ", s.getFromPhone());
-            Log.d("------ TO ------ : ", s.getToPhone());
+            Log.d("------ FROM ------ : ", s.getDirection());
+            Log.d("------ TO ------ : ", s.getPhone());
             Log.d("------ CONTENT------ : ", s.getContent());
             Log.d("------ TIME ------ : ", s.getTime());
         }

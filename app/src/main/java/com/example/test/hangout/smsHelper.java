@@ -125,7 +125,6 @@ public class smsHelper extends BroadcastReceiver {
             Toast.putToast(context, toast);
             dbHelper db = new dbHelper(context);
             if (db.insertSms("IN", fromPhone, content) == false)
-//                if (db.insertSms(fromPhone, null, content) == false)
                 Log.d("------ SMS ------ : ", "Sms not save in database");
             else
                 Log.d("------ SMS ------ : ", "Sms save in database");

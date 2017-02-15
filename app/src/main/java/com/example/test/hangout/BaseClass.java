@@ -29,7 +29,6 @@ public class BaseClass extends AppCompatActivity {
 
     public void onRestart() {
         super.onRestart();
-        Log.d("------ BASE ------ : ", "On Restart called");
 
         String ret = ioHelper.readFile(getBaseContext(), filename);
         if (ret != null && ret.length() > 0)
@@ -51,13 +50,10 @@ public class BaseClass extends AppCompatActivity {
 
     public void onStop() {
         super.onStop();
-        Log.d("------ BASE ------ : ", "On Stop called");
-
         ioHelper.writeToFile(getBaseContext(), filename, getTime());
     }
 
     public void onDestroy() {
         super.onDestroy();
-        Log.d("------ BASE ------ : ", "On destroy called");
     }
 }

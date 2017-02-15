@@ -40,9 +40,9 @@ public class SendMessageActivity extends AppCompatActivity {
         {
             sms s = (sms)i.next();
             allTextSms += "//////////////////////\n";
-            if (s.getFromPhone().compareTo("OUT") == 0)
+            if (s.getDirection().compareTo("OUT") == 0)
                 allTextSms += "sended " + "\n";
-            else if (s.getFromPhone().compareTo("IN") == 0)
+            else if (s.getDirection().compareTo("IN") == 0)
                 allTextSms += "received " + "\n";
 //            allTextSms += s.getToPhone() + "\n";
             allTextSms += s.getTime() + "\n";

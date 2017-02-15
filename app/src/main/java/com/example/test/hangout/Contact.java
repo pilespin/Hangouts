@@ -33,33 +33,22 @@ public class Contact {
     }
 
     public String getFirstname()    {
-        if (this.firstname != null)
-            return (this.firstname);
-        else
-            return ("");
+        return (lib.getString(this.firstname));
     }
+
     public String getLastname()     {
-        if (this.lastname != null)
-            return (this.lastname);
-        else
-            return ("");
+        return (lib.getString(this.lastname));
     }
+
     public String getPhone()        {
-        if (this.phone != null)
-            return (this.phone);
-        else
-            return ("");
+        return (lib.getString(this.phone));
     }
+
     public String getEmail()        {
-        if (this.email != null)
-            return (this.email);
-        else
-            return ("");
+        return (lib.getString(this.email));
     }
+
     public String getCity()         {
-        if (this.city != null)
-            return (this.city);
-        else
-            return ("");
+        return (lib.getString(this.city));
     }
 }

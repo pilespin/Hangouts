@@ -44,8 +44,8 @@ public class dbHelper extends SQLiteOpenHelper {
         );
         db.execSQL("CREATE TABLE sms (" +
                 "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "fromPhone TEXT, " +
-                "toPhone TEXT, " +
+                "direction TEXT, " +
+                "phone TEXT, " +
                 "content TEXT NOT NULL, " +
                 "time TEXT NOT NULL" +
                 ");"
@@ -62,7 +62,7 @@ public class dbHelper extends SQLiteOpenHelper {
     ////////////////////////////////////// SMS /////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
 
-    public boolean insertSms(String fromPhone, String toPhone, String content) {
+    public boolean insertSms(String direction, String phone, String content) {
 
         SQLiteDatabase bdd = this.getWritableDatabase();
 
@@ -71,11 +71,8 @@ public class dbHelper extends SQLiteOpenHelper {
         if (content == null || content.length() <= 0)
             return (false);
 
-//        Log.d("------ MY LOG ------ : ", "phone = " + "\"" + fromPhone + "\"");
-//        Log.d("------ MY LOG ------ : ", "content = " + "\"" + content + "\"");
-
-        values.put("fromPhone", fromPhone);
-        values.put("toPhone", toPhone);
+        values.put("direction", direction);
+        values.put("phone", phone);
         values.put("content", content);
         values.put("time", getTimeNow());
 
@@ -98,9 +95,9 @@ public class dbHelper extends SQLiteOpenHelper {
 
         if (c.getColumnCount() > 0) {
             int index = -1;
-            if ((index = c.getColumnIndex("fromPhone")) != -1)
+            if ((index = c.getColumnIndex("direction")) != -1)
                 fromPhone = c.getString(index);
-            if ((index = c.getColumnIndex("toPhone")) != -1)
+            if ((index = c.getColumnIndex("phone")) != -1)
                 toPhone = c.getString(index);
             if ((index = c.getColumnIndex("content")) != -1)
                 content = c.getString(index);
@@ -122,7 +119,7 @@ public class dbHelper extends SQLiteOpenHelper {
         dbHelper dbHelper = new dbHelper(context);
         SQLiteDatabase bdd = dbHelper.getWritableDatabase();
 
-        Cursor c = bdd.rawQuery("SELECT * FROM sms WHERE toPhone=? ORDER BY time ASC", new String[]{phone});
+        Cursor c = bdd.rawQuery("SELECT * FROM sms WHERE phone=? ORDER BY time ASC", new String[]{phone});
 //        Cursor c = bdd.rawQuery("SELECT * FROM sms ORDER BY time ASC", null);
         c.moveToFirst();
 
@@ -132,11 +129,6 @@ public class dbHelper extends SQLiteOpenHelper {
             sms sms = getSmsInCursor(c);
             Log.d("------ MY SMS ------ : ", "PASS in cursor");
             if (sms != null) {
-
-//                if (sms.getContent().length() <= 0)
-//                    Log.d("------ MY SMS ------ : ", "Content in sms is empty");
-//                else
-//                    Log.d("------ MY SMS ------ : ", sms.getContent());
                 allSms.add(sms);
             }
             else
@@ -150,7 +142,7 @@ public class dbHelper extends SQLiteOpenHelper {
 
     }
 
-    public List<sms> getSmsAll(Context context) {
+    public List<sms> getSmsAll(Context context) { ///REMOVE
 
         dbHelper dbHelper = new dbHelper(context);
         SQLiteDatabase bdd = dbHelper.getWritableDatabase();
@@ -164,11 +156,6 @@ public class dbHelper extends SQLiteOpenHelper {
             sms sms = getSmsInCursor(c);
             Log.d("------ MY SMS ------ : ", "PASS in cursor");
             if (sms != null) {
-
-//                if (sms.getContent().length() <= 0)
-//                    Log.d("------ MY SMS ------ : ", "Content in sms is empty");
-//                else
-//                    Log.d("------ MY SMS ------ : ", sms.getContent());
                 allSms.add(sms);
             }
             else
@@ -185,6 +172,7 @@ public class dbHelper extends SQLiteOpenHelper {
     ////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////// CONTACT ///////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
+
     public boolean insertContact(Contact contact) {
         Log.d("------ MY LG ------ : ", "Called function create contact");
 

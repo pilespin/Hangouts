@@ -6,17 +6,17 @@ package com.example.test.hangout;
 
 public class sms {
 
-    private String fromPhone    = "";
-    private String toPhone      = "";
+    private String direction    = "";
+    private String phone        = "";
     private String content      = "";
     private String time         = "";
 
-    public sms(String fromPhone, String toPhone, String content, String time) {
+    public sms(String direction, String phone, String content, String time) {
 
-        if (fromPhone != null && fromPhone.length() > 0)
-            this.fromPhone = fromPhone;
-        if (toPhone != null && toPhone.length() > 0)
-            this.toPhone = toPhone;
+        if (direction != null && direction.length() > 0)
+            this.direction = direction;
+        if (phone != null && phone.length() > 0)
+            this.phone = phone;
         if (content != null && content.length() > 0)
             this.content = content;
         if (time != null && time.length() > 0)
@@ -24,31 +24,19 @@ public class sms {
     }
 
     public String getContent()    {
-        if (this.content != null)
-            return (this.content);
-        else
-            return ("");
+        return (lib.getString(this.content));
     }
 
-    public String getFromPhone()    {
-        if (this.fromPhone != null)
-            return (this.fromPhone);
-        else
-            return ("");
+    public String getDirection()    {
+        return (lib.getString(this.direction));
     }
 
-    public String getToPhone()    {
-        if (this.toPhone != null)
-            return (this.toPhone);
-        else
-            return ("");
+    public String getPhone()    {
+        return (lib.getString(this.phone));
     }
 
     public String getTime()    {
-        if (this.time != null)
-            return (this.time);
-        else
-            return ("");
+        return (lib.getString(this.time));
     }
 
 }
