@@ -73,8 +73,7 @@ public class SendMessageActivity extends AppCompatActivity {
         else
             Log.d("------ SMS ------ : ", "Sms save in database");
 
-        Intent intent = new Intent(getBaseContext(), MainActivity.class);
-//        intentHelper.putContact(intent, c);
-        startActivity(intent);
+        finish();
+        startActivity(getIntent());
     }
 }
