@@ -64,24 +64,24 @@ public class MainActivity extends BaseClass {
         Log.d("------ MY LG ------ : ", "On create CALLED of mainActivity");
 
         dbHelper dbHelper = new dbHelper(getBaseContext());
-        List<sms> allSms = dbHelper.getSmsAll(getBaseContext());
+//        List<sms> allSms = dbHelper.getSmsAll(getBaseContext());
 
-        String allTextSms = "";
-
-        Log.d("------ ALLSMS ------ : ", "ALLSMS BEGIN");
-        Iterator j = allSms.iterator();
-        while (j.hasNext())
-        {
-            sms s = (sms)j.next();
-            allTextSms += s.getContent() + "\n";
-            Log.d("------ ALLSMS ------ : ", "oooooooooooooooooooooooo");
-            Log.d("------ FROM ------ : ", s.getDirection());
-            Log.d("------ TO ------ : ", s.getPhone());
-            Log.d("------ CONTENT------ : ", s.getContent());
-            Log.d("------ TIME ------ : ", s.getTime());
-        }
-        Log.d("------ ALLSMS ------ : ", allTextSms);
-        Log.d("------ ALLSMS ------ : ", "ALLSMS END");
+//        String allTextSms = "";
+//
+//        Log.d("------ ALLSMS ------ : ", "ALLSMS BEGIN");
+//        Iterator j = allSms.iterator();
+//        while (j.hasNext())
+//        {
+//            sms s = (sms)j.next();
+//            allTextSms += s.getContent() + "\n";
+//            Log.d("------ ALLSMS ------ : ", "oooooooooooooooooooooooo");
+//            Log.d("------ FROM ------ : ", s.getDirection());
+//            Log.d("------ TO ------ : ", s.getPhone());
+//            Log.d("------ CONTENT------ : ", s.getContent());
+//            Log.d("------ TIME ------ : ", s.getTime());
+//        }
+//        Log.d("------ ALLSMS ------ : ", allTextSms);
+//        Log.d("------ ALLSMS ------ : ", "ALLSMS END");
 
 //        dbHelper.insertContact(new Contact("John", "Doe", "0554656", "", ""));
 //        dbHelper.insertContact(new Contact("Foo", "Bar", "0654656", "", ""));

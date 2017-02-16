@@ -271,4 +271,17 @@ public class dbHelper extends SQLiteOpenHelper {
         bdd.close();
         return (allContact);
     }
+
+    public boolean checkContactByPhone(Context context, String phone) {
+
+        dbHelper dbHelper = new dbHelper(context);
+        SQLiteDatabase bdd = dbHelper.getWritableDatabase();
+
+        Cursor c = bdd.rawQuery("SELECT * FROM contacts WHERE phone=?", new String[] {phone});
+
+        if (c.getCount() == 1)
+            return (true);
+        else
+            return (false);
+    }
 }
