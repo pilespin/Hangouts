@@ -39,7 +39,7 @@ public class MainActivity extends BaseClass {
 
         int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS);
         if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
-            Toast.putToast(getBaseContext() ,"Good now you can send and receive sms");
+            Toast.putToast(getBaseContext() ,"Good now you can send and receive sms"); //REMOVE
         }
         else
         {

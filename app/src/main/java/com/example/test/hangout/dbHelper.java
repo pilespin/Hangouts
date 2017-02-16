@@ -120,7 +120,6 @@ public class dbHelper extends SQLiteOpenHelper {
         SQLiteDatabase bdd = dbHelper.getWritableDatabase();
 
         Cursor c = bdd.rawQuery("SELECT * FROM sms WHERE phone=? ORDER BY time ASC", new String[]{phone});
-//        Cursor c = bdd.rawQuery("SELECT * FROM sms ORDER BY time ASC", null);
         c.moveToFirst();
 
         List<sms> allSms = new ArrayList<sms>();

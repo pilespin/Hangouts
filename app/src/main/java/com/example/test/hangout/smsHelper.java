@@ -117,7 +117,7 @@ public class smsHelper extends BroadcastReceiver {
             for (int i=0; i<msgs.length; i++){
                 msgs[i] = SmsMessage.createFromPdu((byte[])pdus[i]);
                 fromPhone = msgs[i].getOriginatingAddress();
-                toast = "New SMS from " + fromPhone;
+                toast = context.getString(R.string.toastNewSmsFrom) + fromPhone;
                 content += msgs[i].getMessageBody().toString();
             }
             abortBroadcast();

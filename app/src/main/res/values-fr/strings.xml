@@ -16,6 +16,8 @@
     <string name="toastContactAdded">Contact ajouté</string>
     <string name="toastcontactDeleted">Contact supprimé</string>
     <string name="toastUnknowError">Erreur inconnue</string>
+    <string name="toastLastOpened">Dernier fois ouvert a </string>
+    <string name="toastNewSmsFrom">Nouveau Sms de </string>
 
     <string name="firstname">Prenom</string>
     <string name="lastname">Nom de famille</string>
