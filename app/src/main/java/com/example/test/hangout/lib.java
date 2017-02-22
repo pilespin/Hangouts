@@ -17,7 +17,6 @@ public class lib {
 
     public static String getInsertedValue(EditText e) {
 
-//        EditText editText = (EditText)findViewById(id);
         if (e == null)
             return ("");
 

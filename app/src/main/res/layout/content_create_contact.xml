@@ -20,124 +20,46 @@
     tools:context="com.example.test.hangout.CreateContactActivity"
     tools:showIn="@layout/activity_create_contact">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView4"
-        android:layout_alignLeft="@+id/textView4"
-        android:layout_alignStart="@+id/textView4"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin_title"
-        android:textSize="18sp"
-        android:textStyle="normal|bold"
-        android:text="@string/firstname" />
 
     <EditText
+        android:id="@+id/Firstname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:ems="10"
-        android:layout_alignBaseline="@+id/LastName"
-        android:layout_alignBottom="@+id/LastName"
-        android:layout_alignLeft="@+id/editFirstname"
-        android:layout_alignStart="@+id/editFirstname"
-        android:id="@+id/Firstname" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textStyle="normal|bold"
-        android:textAllCaps="false"
-        android:textSize="18sp"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin_title"
-        android:textAlignment="viewStart"
-        android:layout_below="@+id/textView4"
-        android:layout_alignLeft="@+id/textView4"
-        android:layout_alignStart="@+id/textView4"
-        android:layout_marginTop="@dimen/activity_horizontal_margin_between"
-        android:text="@string/lastname" />
+        android:hint="@string/firstname"
+        android:layout_margin="@dimen/activity_vertical_margin"/>
 
     <EditText
+        android:id="@+id/Lastname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:ems="10"
-        android:layout_alignBaseline="@+id/LastName"
-        android:layout_alignBottom="@+id/LastName"
-        android:layout_alignLeft="@+id/editFirstname"
-        android:layout_alignStart="@+id/editFirstname"
-        android:id="@+id/Lastname" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textStyle="normal|bold"
-        android:textAllCaps="false"
-        android:layout_marginTop="@dimen/activity_horizontal_margin_between"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin_title"
-        android:textSize="18sp"
-        android:textAlignment="viewStart"
-        android:layout_below="@+id/Lastname"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:text="@string/phone" />
+        android:hint="@string/lastname"
+        android:layout_margin="@dimen/activity_vertical_margin"/>
 
     <EditText
+        android:id="@+id/Phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="phone"
-        android:ems="10"
-        android:id="@+id/Phone"
-        android:layout_above="@+id/editFirstname"
-        android:layout_alignLeft="@+id/editFirstname"
-        android:layout_alignStart="@+id/editFirstname" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textStyle="normal|bold"
-        android:textAllCaps="false"
-        android:layout_marginTop="@dimen/activity_horizontal_margin_between"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin_title"
-        android:textSize="18sp"
-        android:textAlignment="viewStart"
-        android:layout_below="@+id/Lastname"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/email"
-        android:text="@string/email" />
+        android:hint="@string/phone"
+        android:layout_margin="@dimen/activity_vertical_margin"/>
 
     <EditText
+        android:id="@+id/Email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
-        android:ems="10"
-        android:id="@+id/Email"
-        android:layout_above="@+id/editFirstname"
-        android:layout_alignLeft="@+id/editFirstname"
-        android:layout_alignStart="@+id/editFirstname" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_horizontal_margin_between"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin_title"
-        android:layout_below="@+id/Lastname"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/textView2"
-        android:textSize="18sp"
-        android:textStyle="normal|bold"
-        android:text="@string/city" />
+        android:hint="@string/email"
+        android:layout_margin="@dimen/activity_vertical_margin"/>
 
     <EditText
+        android:id="@+id/City"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="text"
-        android:ems="10"
-        android:id="@+id/City"
-        android:layout_above="@+id/editFirstname"
-        android:layout_alignLeft="@+id/editFirstname"
-        android:layout_alignStart="@+id/editFirstname" />
+        android:hint="@string/city"
+        android:layout_margin="@dimen/activity_vertical_margin"/>
 
 </LinearLayout>
 </ScrollView>

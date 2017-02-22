@@ -10,10 +10,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -24,38 +28,33 @@ public class SendMessageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_send_message);
 
+        //SET TITTLE
         Contact c = intentHelper.getContact(getIntent());
         setTitle(c.getFirstname() + " " + c.getLastname());
-
-        TextView tvfname = (TextView) findViewById(R.id.displayAllSms);
 
         dbHelper dbHelper = new dbHelper(getBaseContext());
 
         List<sms> allSms = dbHelper.getSmsByPhone(getBaseContext(), c.getPhone());
 
-        String allTextSms = "";
+        if (allSms != null) {
 
-        Iterator i = allSms.iterator();
-        while (i.hasNext())
-        {
-            sms s = (sms)i.next();
-            allTextSms += "//////////////////////\n";
-            if (s.getDirection().compareTo("OUT") == 0)
-                allTextSms += "sended " + "\n";
-            else if (s.getDirection().compareTo("IN") == 0)
-                allTextSms += "received " + "\n";
-//            allTextSms += s.getToPhone() + "\n";
-            allTextSms += s.getTime() + "\n";
-            allTextSms += s.getContent() + "\n";
+            final ListView mListView;
+            mListView = (ListView) findViewById(R.id.listViewSms);
+
+            final ArrayList<String> all = new ArrayList<String>();
+
+            Iterator i = allSms.iterator();
+            while (i.hasNext()) {
+                sms s = (sms) i.next();
+                all.add(s.getContent() + "\n" + s.getTime());
+            }
+
+            //android.R.layout.simple_list_item_1 est une vue disponible de base dans le SDK android,
+            //Contenant une TextView avec comme identifiant "@android:id/text1"
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                    android.R.layout.simple_list_item_1, all);
+            mListView.setAdapter(adapter);
         }
-
-        tvfname.setText(allTextSms);
-
-        ScrollView scroll = (ScrollView) this.findViewById(R.id.activity_send_message);
-        scroll.fullScroll(View.FOCUS_DOWN);
-//        scroll.fullScroll(scroll.FOCUS_DOWN);
-//        scroll.scrollTo(0, 5000);
-//        scroll.fullScroll(scroll.getBottom());
     }
 
     public void buttonSendMessage(View view) {
