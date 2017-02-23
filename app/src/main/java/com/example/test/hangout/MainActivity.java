@@ -63,11 +63,11 @@ public class MainActivity extends BaseClass {
 
         dbHelper dbHelper = new dbHelper(getBaseContext());
 
-        dbHelper.insertContact(new Contact("John", "Doe", "0554656", "", ""));
-        dbHelper.insertContact(new Contact("Foo", "Bar", "0654656", "", ""));
-        dbHelper.insertContact(new Contact("Lee", "Kol", "061234", "", ""));
-        dbHelper.insertContact(new Contact("Mes", "Lev.J", "061237", "", ""));
-        dbHelper.insertContact(new Contact("avd", "56", "15555215556", "", ""));
+//        dbHelper.insertContact(new Contact("John", "Doe", "0554656", "", ""));
+//        dbHelper.insertContact(new Contact("Foo", "Bar", "0654656", "", ""));
+//        dbHelper.insertContact(new Contact("Lee", "Kol", "061234", "", ""));
+//        dbHelper.insertContact(new Contact("Mes", "Lev.J", "061237", "", ""));
+//        dbHelper.insertContact(new Contact("avd", "56", "15555215556", "", ""));
 
         final List<Contact> allContact  = dbHelper.getAllContact(getBaseContext());
         final ArrayList<String> allname     = new ArrayList<String>();
