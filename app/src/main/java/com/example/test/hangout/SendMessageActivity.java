@@ -46,13 +46,13 @@ public class SendMessageActivity extends AppCompatActivity {
             Iterator i = allSms.iterator();
             while (i.hasNext()) {
                 sms s = (sms) i.next();
-                all.add(s.getContent() + "\n" + s.getTime());
+                if  (s.getDirection().compareTo("IN") == 0)
+                    all.add("received\n" + s.getContent() + "\n" + s.getTime());
+                else
+                    all.add("transmit\n" + s.getContent() + "\n" + s.getTime());
             }
 
-            //android.R.layout.simple_list_item_1 est une vue disponible de base dans le SDK android,
-            //Contenant une TextView avec comme identifiant "@android:id/text1"
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                    android.R.layout.simple_list_item_1, all);
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.sms_listview_item, R.id.text1 , all);
             mListView.setAdapter(adapter);
         }
     }
