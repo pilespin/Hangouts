@@ -42,17 +42,20 @@ public class SendMessageActivity extends AppCompatActivity {
             mListView = (ListView) findViewById(R.id.listViewSms);
 
             final ArrayList<String> all = new ArrayList<String>();
-
             Iterator i = allSms.iterator();
             while (i.hasNext()) {
+//
                 sms s = (sms) i.next();
-                if  (s.getDirection().compareTo("IN") == 0)
-                    all.add("received\n" + s.getContent() + "\n" + s.getTime());
-                else
-                    all.add("transmit\n" + s.getContent() + "\n" + s.getTime());
+                    all.add("");
+//                if  (s.getDirection().compareTo("IN") == 0)
+//                    all.add("received\n" + s.getContent() + "\n" + s.getTime());
+//                else
+//                    all.add("transmit\n" + s.getContent() + "\n" + s.getTime());
             }
 
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.sms_listview_item, R.id.text1 , all);
+//            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.sms_listview_item, R.id.text1, all);
+
+            SmsAdapter adapter = new SmsAdapter(getBaseContext(), all, allSms);
             mListView.setAdapter(adapter);
         }
     }
