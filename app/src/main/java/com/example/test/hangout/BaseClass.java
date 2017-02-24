@@ -2,7 +2,6 @@ package com.example.test.hangout;
 
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.Time;
-import android.util.Log;
 
 /**
  * Created by pilespin on 2/6/17.

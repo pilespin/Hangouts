@@ -2,7 +2,6 @@ package com.example.test.hangout;
 
 import android.content.Context;
 import android.util.Log;
-import android.widget.EditText;
 
 import java.io.File;
 import java.io.FileInputStream;

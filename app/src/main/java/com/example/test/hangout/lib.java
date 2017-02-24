@@ -1,6 +1,5 @@
 package com.example.test.hangout;
 
-import android.util.Log;
 import android.widget.EditText;
 
 import java.text.ParseException;

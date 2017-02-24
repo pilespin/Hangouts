@@ -15,14 +15,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
-import static android.R.id.list;
 
 public class MainActivity extends BaseClass {
 
@@ -95,7 +92,7 @@ public class MainActivity extends BaseClass {
                 intentHelper.putOnceKey(intent, "Phone", allContact.get(position).getPhone());
                 intentHelper.putOnceKey(intent, "Email", allContact.get(position).getEmail());
                 intentHelper.putOnceKey(intent, "City", allContact.get(position).getCity());
-
+                finish();
                 startActivity(intent);
             }
         });

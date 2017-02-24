@@ -1,9 +1,6 @@
 package com.example.test.hangout;
 
 import android.content.Context;
-import android.text.format.DateUtils;
-import android.text.format.Time;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,13 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
-
-import static android.text.format.DateUtils.FORMAT_ABBREV_RELATIVE;
 
 /**
  * Created by pilespin on 2/23/17.

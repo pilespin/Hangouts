@@ -1,8 +1,6 @@
 package com.example.test.hangout;
 
-import android.content.Context;
 import android.content.Intent;
-import android.widget.EditText;
 
 /**
  * Created by pilespin on 2/11/17.

@@ -1,27 +1,24 @@
 package com.example.test.hangout;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.os.SystemClock;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.ScrollView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 public class SendMessageActivity extends AppCompatActivity {
+
+    @Override
+    public void onBackPressed() {
+        finish();
+        startActivity(new Intent(this, MainActivity.class));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,19 +41,13 @@ public class SendMessageActivity extends AppCompatActivity {
             final ArrayList<String> all = new ArrayList<String>();
             Iterator i = allSms.iterator();
             while (i.hasNext()) {
-//
                 sms s = (sms) i.next();
                     all.add("");
-//                if  (s.getDirection().compareTo("IN") == 0)
-//                    all.add("received\n" + s.getContent() + "\n" + s.getTime());
-//                else
-//                    all.add("transmit\n" + s.getContent() + "\n" + s.getTime());
             }
-
-//            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.sms_listview_item, R.id.text1, all);
 
             SmsAdapter adapter = new SmsAdapter(getBaseContext(), all, allSms);
             mListView.setAdapter(adapter);
+
         }
     }
 
