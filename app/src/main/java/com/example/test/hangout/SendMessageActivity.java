@@ -1,6 +1,7 @@
 package com.example.test.hangout;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,16 +15,33 @@ import java.util.List;
 
 public class SendMessageActivity extends AppCompatActivity {
 
+    private final Handler handler = new Handler();
+
     @Override
     public void onBackPressed() {
         finish();
         startActivity(new Intent(this, MainActivity.class));
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_send_message);
+    private void doTheAutoRefresh() {
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                // Write code for your refresh logic
+                ////////////////////////
+                String s = ioHelper.readFile(getBaseContext(), "refresh");
+
+                if (s.compareTo("1") == 0) {
+                    ioHelper.writeToFile(getBaseContext(), "refresh", "0");
+                    displaySms();
+                }
+                ////////////////////////
+                doTheAutoRefresh();
+            }
+        }, 1000);
+    }
+
+    private void displaySms() {
 
         //SET TITTLE
         Contact c = intentHelper.getContact(getIntent());
@@ -42,13 +60,22 @@ public class SendMessageActivity extends AppCompatActivity {
             Iterator i = allSms.iterator();
             while (i.hasNext()) {
                 sms s = (sms) i.next();
-                    all.add("");
+                all.add("");
             }
 
             SmsAdapter adapter = new SmsAdapter(getBaseContext(), all, allSms);
             mListView.setAdapter(adapter);
-
         }
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_send_message);
+
+        displaySms();
+        doTheAutoRefresh();
+
     }
 
     public void buttonSendMessage(View view) {
