@@ -132,7 +132,6 @@ public class smsHelper extends BroadcastReceiver {
                     db.insertContact(new Contact(fromPhone, "", fromPhone, "", ""));
                 }
             }
-            ioHelper.writeToFile(context, "refresh", "1");
         }
     }
 }

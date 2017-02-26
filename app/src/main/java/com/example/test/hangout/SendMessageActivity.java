@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -15,7 +16,11 @@ import java.util.List;
 
 public class SendMessageActivity extends AppCompatActivity {
 
+    Contact c = null;
+//    SmsAdapter adapter;
+//    ListView mListView;
     private final Handler handler = new Handler();
+    boolean killRefresh = false;
 
     @Override
     public void onBackPressed() {
@@ -27,15 +32,21 @@ public class SendMessageActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                // Write code for your refresh logic
-                ////////////////////////
-                String s = ioHelper.readFile(getBaseContext(), "refresh");
+                dbHelper dbHelper = new dbHelper(getBaseContext());
 
-                if (s.compareTo("1") == 0) {
-                    ioHelper.writeToFile(getBaseContext(), "refresh", "0");
+                int oldsize = dbHelper.getSmsRead(c.getPhone());
+
+                List<sms> allSms = dbHelper.getSmsByPhone(getBaseContext(), c.getPhone());
+                int tmp = allSms.size();
+
+                Log.d("------ OLDSIZE ------ : ", "RETURNED=" + oldsize);
+                Log.d("------ SMSSIZE ------ : ", "RETURNED=" + tmp);
+
+                if (oldsize != tmp) {
                     displaySms();
                 }
-                ////////////////////////
+
+                if (killRefresh == false)
                 doTheAutoRefresh();
             }
         }, 1000);
@@ -43,18 +54,15 @@ public class SendMessageActivity extends AppCompatActivity {
 
     private void displaySms() {
 
-        //SET TITTLE
-        Contact c = intentHelper.getContact(getIntent());
-        setTitle(c.getFirstname() + " " + c.getLastname());
-
         dbHelper dbHelper = new dbHelper(getBaseContext());
 
         List<sms> allSms = dbHelper.getSmsByPhone(getBaseContext(), c.getPhone());
+        dbHelper.setSmsRead(c.getPhone(), allSms.size());
+
+        final ListView mListView;
+        mListView = (ListView) findViewById(R.id.listViewSms);
 
         if (allSms != null) {
-
-            final ListView mListView;
-            mListView = (ListView) findViewById(R.id.listViewSms);
 
             final ArrayList<String> all = new ArrayList<String>();
             Iterator i = allSms.iterator();
@@ -73,9 +81,20 @@ public class SendMessageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_send_message);
 
+        //SET TITTLE
+        c = intentHelper.getContact(getIntent());
+        setTitle(c.getFirstname() + " " + c.getLastname());
+
         displaySms();
         doTheAutoRefresh();
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        handler.removeCallbacks(null);
+        killRefresh = true;
     }
 
     public void buttonSendMessage(View view) {

@@ -25,8 +25,8 @@ public class ioHelper {
             outputStream.write(content.getBytes());
             outputStream.close();
         } catch (Exception e) {
-            Log.d("------ BASE ------ : ", "File not write");
-            e.printStackTrace();
+//            Log.d("------ BASE ------ : ", "File not write");
+//            e.printStackTrace();
         }
     }
 
@@ -40,8 +40,8 @@ public class ioHelper {
             in.read(bytes);
             in.close();
         } catch (Exception e) {
-            Log.d("------ BASE ------ : ", "File not found");
-            e.printStackTrace();
+//            Log.d("------ BASE ------ : ", "File not found");
+//            e.printStackTrace();
         }
         String content = new String(bytes);
         return (content);

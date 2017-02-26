@@ -18,7 +18,7 @@ import java.util.List;
 public class dbHelper extends SQLiteOpenHelper {
 
     private static int VERSION_DB = 1;
-    private static String NAME_DB = "db.db";
+    private static String NAME_DB = "dbbbbbb.db";
 
     public String getTimeNow() {
 
@@ -36,6 +36,7 @@ public class dbHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE contacts (" +
                 "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "firstname TEXT NOT NULL, " +
+                "smsread INT DEFAULT 0, " +
                 "lastname TEXT," +
                 "phone TEXT NOT NULL UNIQUE," +
                 "email TEXT," +
@@ -60,6 +61,32 @@ public class dbHelper extends SQLiteOpenHelper {
     ////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////// SMS /////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
+
+    public void setSmsRead(String phone, int size) {
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        db.execSQL("UPDATE contacts SET smsread = ? WHERE phone=?", new String[]{String.valueOf(size), phone});
+
+        db.close();
+
+    }
+
+    public int getSmsRead(String phone) {
+
+        SQLiteDatabase bdd = this.getWritableDatabase();
+
+        Cursor c = bdd.rawQuery("SELECT * FROM contacts WHERE phone=?", new String[]{phone});
+        c.moveToFirst();
+
+        int nb = 0;
+        int index = -1;
+        if ((index = c.getColumnIndex("smsread")) != -1)
+            nb = c.getInt(index);
+        bdd.close();
+
+        return (nb);
+    }
 
     public boolean insertSms(String direction, String phone, String content) {
 
@@ -125,7 +152,6 @@ public class dbHelper extends SQLiteOpenHelper {
 
         while (c.isAfterLast() == false) {
             sms sms = getSmsInCursor(c);
-            Log.d("------ MY SMS ------ : ", "PASS in cursor");
             if (sms != null) {
                 allSms.add(sms);
             }
@@ -276,8 +302,10 @@ public class dbHelper extends SQLiteOpenHelper {
         SQLiteDatabase bdd = dbHelper.getWritableDatabase();
 
         Cursor c = bdd.rawQuery("SELECT * FROM contacts WHERE phone=?", new String[] {phone});
+        int nb =  c.getCount();
+        bdd.close();
 
-        if (c.getCount() == 1)
+        if (nb == 1)
             return (true);
         else
             return (false);
