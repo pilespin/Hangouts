@@ -4,7 +4,6 @@
     <string name="title_activity_show_contact">Contact</string>
     <string name="title_activity_modify_contact">Modifier Contact</string>
 
-
     <string name="edit_message">Entrer un message</string>
     <string name="loadingInformation">Chargement des informations</string>
 
@@ -25,7 +24,10 @@
     <string name="email">Email</string>
     <string name="city">Ville</string>
 
-
+    <string name="blue">Bleu</string>
+    <string name="green">Vert</string>
+    <string name="red">Rouge</string>
+    <string name="black">Noir</string>
 
     <string name="large_text">
         "Material is the metaphor.\n\n"

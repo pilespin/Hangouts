@@ -1,6 +1,7 @@
 package com.example.test.hangout;
 
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.format.Time;
 
 /**
@@ -10,6 +11,22 @@ import android.text.format.Time;
 public class BaseClass extends AppCompatActivity {
 
     String filename = "lastOpened.txt";
+
+    public void setColor() {
+
+        String co = ioHelper.readFile(getBaseContext(), "color");
+        if (co != null && co.length() > 0) {
+            Toolbar tlb = (Toolbar) findViewById(R.id.toolbar);
+            if (co.compareTo("blue") == 0)
+                tlb.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+            if (co.compareTo("green") == 0)
+                tlb.setBackgroundColor(getResources().getColor(R.color.colorGreen));
+            if (co.compareTo("red") == 0)
+                tlb.setBackgroundColor(getResources().getColor(R.color.colorRed));
+            if (co.compareTo("black") == 0)
+                tlb.setBackgroundColor(getResources().getColor(R.color.colorBlack));
+        }
+    }
 
     public String getTime() {
 

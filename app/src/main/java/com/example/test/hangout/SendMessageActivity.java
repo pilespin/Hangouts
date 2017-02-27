@@ -1,6 +1,7 @@
 package com.example.test.hangout;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class SendMessageActivity extends AppCompatActivity {
+public class SendMessageActivity extends BaseClass {
 
     Contact c = null;
 //    SmsAdapter adapter;
@@ -38,9 +39,6 @@ public class SendMessageActivity extends AppCompatActivity {
 
                 List<sms> allSms = dbHelper.getSmsByPhone(getBaseContext(), c.getPhone());
                 int tmp = allSms.size();
-
-                Log.d("------ OLDSIZE ------ : ", "RETURNED=" + oldsize);
-                Log.d("------ SMSSIZE ------ : ", "RETURNED=" + tmp);
 
                 if (oldsize != tmp) {
                     displaySms();
@@ -91,7 +89,7 @@ public class SendMessageActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         super.onDestroy();
         handler.removeCallbacks(null);
         killRefresh = true;

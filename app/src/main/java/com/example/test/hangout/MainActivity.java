@@ -3,6 +3,7 @@ package com.example.test.hangout;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -29,6 +30,7 @@ public class MainActivity extends BaseClass {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        setColor();
 
         /////////////////////////////// PERMISSION ///////////////////////////////////
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS},1);
@@ -104,6 +106,21 @@ public class MainActivity extends BaseClass {
                 android.R.layout.simple_list_item_1, allname);
         mListView.setAdapter(adapter);
         /////////////////////////
+
+//        String co = ioHelper.readFile(getBaseContext(), "color");
+//        if (co != null && co.length() > 0)
+//        {
+//            Toolbar tlb = (Toolbar) findViewById(R.id.toolbar);
+//            if (co.compareTo("blue") == 0)
+//                tlb.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+//            if (co.compareTo("green") == 0)
+//                tlb.setBackgroundColor(getResources().getColor(R.color.colorGreen));
+//            if (co.compareTo("red") == 0)
+//                tlb.setBackgroundColor(getResources().getColor(R.color.colorRed));
+//            if (co.compareTo("black") == 0)
+//                tlb.setBackgroundColor(getResources().getColor(R.color.colorBlack));
+//        }
+
     }
 
     @Override
@@ -122,6 +139,7 @@ public class MainActivity extends BaseClass {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            startActivity(new Intent(getBaseContext(), SettingsActivity.class));
             return true;
         }
 

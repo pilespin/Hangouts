@@ -24,7 +24,10 @@
     <string name="email">Email</string>
     <string name="city">City</string>
 
-
+    <string name="blue">Blue</string>
+    <string name="green">Green</string>
+    <string name="red">Red</string>
+    <string name="black">Black</string>
 
     <string name="large_text">
         "Material is the metaphor.\n\n"
@@ -116,4 +119,5 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="title_activity_create_contact">Create a Contact</string>
+    <string name="title_activity_settings">settingsActivity</string>
 </resources>

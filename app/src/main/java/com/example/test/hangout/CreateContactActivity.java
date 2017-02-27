@@ -29,6 +29,7 @@ public class CreateContactActivity extends BaseClass {
         setContentView(R.layout.activity_create_contact);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        setColor();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

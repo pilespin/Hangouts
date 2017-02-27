@@ -18,7 +18,7 @@ import java.util.List;
 public class dbHelper extends SQLiteOpenHelper {
 
     private static int VERSION_DB = 1;
-    private static String NAME_DB = "dbbbbbb.db";
+    private static String NAME_DB = "db.db";
 
     public String getTimeNow() {
 
