@@ -1,16 +1,9 @@
 package com.example.test.hangout;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,40 +18,28 @@ import java.util.List;
 public class MainActivity extends BaseClass {
 
     @Override
+    public void onBackPressed() {
+        finish();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setColor();
-
-        /////////////////////////////// PERMISSION ///////////////////////////////////
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS},1);
-
-        int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS);
-        if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
-            Toast.putToast(getBaseContext() ,"Good now you can send and receive sms"); //REMOVE
-        }
-        else
-        {
-            Toast.putToast(getBaseContext(), "Bad");
-            Log.d("------ BASE ------ : ", "You need to allow sending sms to send sms");
-        }
-        //////////////////////////////////////////////////////////////////////////////
+        requestPermission(false);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                finish();
                 startActivity(new Intent(getBaseContext(), CreateContactActivity.class));
-
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
             }
         });
         ////////////////////////////
-
-        Log.d("------ MY LG ------ : ", "On create CALLED of mainActivity");
 
         dbHelper dbHelper = new dbHelper(getBaseContext());
 
@@ -85,8 +66,7 @@ public class MainActivity extends BaseClass {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Toast.putToast(getApplicationContext(), "Click " + allname.get(position));
-//                Intent intent = new Intent(MainActivity.this, MainActivity.class);
+
                 Intent intent = new Intent(MainActivity.this, ShowContactActivity.class);
 
                 intentHelper.putOnceKey(intent, "Firstname", allContact.get(position).getFirstname());
@@ -101,25 +81,9 @@ public class MainActivity extends BaseClass {
 
         //android.R.layout.simple_list_item_1 est une vue disponible de base dans le SDK android,
         //Contenant une TextView avec comme identifiant "@android:id/text1"
-
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this,
                 android.R.layout.simple_list_item_1, allname);
         mListView.setAdapter(adapter);
-        /////////////////////////
-
-//        String co = ioHelper.readFile(getBaseContext(), "color");
-//        if (co != null && co.length() > 0)
-//        {
-//            Toolbar tlb = (Toolbar) findViewById(R.id.toolbar);
-//            if (co.compareTo("blue") == 0)
-//                tlb.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-//            if (co.compareTo("green") == 0)
-//                tlb.setBackgroundColor(getResources().getColor(R.color.colorGreen));
-//            if (co.compareTo("red") == 0)
-//                tlb.setBackgroundColor(getResources().getColor(R.color.colorRed));
-//            if (co.compareTo("black") == 0)
-//                tlb.setBackgroundColor(getResources().getColor(R.color.colorBlack));
-//        }
 
     }
 
@@ -139,6 +103,7 @@ public class MainActivity extends BaseClass {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            finish();
             startActivity(new Intent(getBaseContext(), SettingsActivity.class));
             return true;
         }

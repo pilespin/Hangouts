@@ -23,6 +23,7 @@ public class ShowContactActivity extends BaseClass {
         setContentView(R.layout.activity_show_contact);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        setColorColapsing();
 
         contact = intentHelper.getContact(getIntent());
 
@@ -30,13 +31,11 @@ public class ShowContactActivity extends BaseClass {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Intent intent = new Intent(getBaseContext(), SendMessageActivity.class);
 
                 intentHelper.putContact(intent, contact);
+                finish();
                 startActivity(intent);
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
             }
         });
 
@@ -71,7 +70,7 @@ public class ShowContactActivity extends BaseClass {
         dbHelper dbHelper = new dbHelper(getBaseContext());
 
         dbHelper.deleteContactByPhone(getBaseContext(), contact.getPhone());
-        Toast.putToast(getBaseContext(), "Contact Deleted");
+        Toast.putToast(getBaseContext(), getString(R.string.toastcontactDeleted));
         startActivity(new Intent(this, MainActivity.class));
 
     }
@@ -83,7 +82,7 @@ public class ShowContactActivity extends BaseClass {
 
         contact = intentHelper.getContact(oldintent);
         intentHelper.putContact(newintent, contact);
-
+        finish();
         startActivity(newintent);
 
     }

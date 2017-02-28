@@ -22,11 +22,11 @@ public class smsHelper extends BroadcastReceiver {
 
     public final int SMS_MAX_LENGTH = 160;
 
-    public void sendSms(Context context, String phoneNumber, String content) {
+    public void sendSms(Context context, String phoneNumber, final String content) {
 
         int permissionCheck = ContextCompat.checkSelfPermission(context, Manifest.permission.SEND_SMS);
         if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-            Toast.putToast(context, "You need permission for this");
+            Toast.putToast(context, context.getString(R.string.toastNeedPermission));
             return;
         }
 
@@ -58,19 +58,19 @@ public class smsHelper extends BroadcastReceiver {
             public void onReceive(Context context, Intent intent) {
                 switch (getResultCode()) {
                     case Activity.RESULT_OK:
-                        Toast.putToast(context, "SMS sent successfully");
+                        Toast.putToast(context, context.getString(R.string.toastSmsSentSuccesfull));
                         break;
                     case SmsManager.RESULT_ERROR_GENERIC_FAILURE:
-                        Toast.putToast(context, "Generic failure cause");
+                        Toast.putToast(context, context.getString(R.string.toastGenericFailureCause));
                         break;
                     case SmsManager.RESULT_ERROR_NO_SERVICE:
-                        Toast.putToast(context, "Service is currently unavailable");
+                        Toast.putToast(context, context.getString(R.string.toastServiceUnavailable));
                         break;
                     case SmsManager.RESULT_ERROR_NULL_PDU:
-                        Toast.putToast(context, "No pdu provided");
+                        Toast.putToast(context, context.getString(R.string.toastNoPduProvided));
                         break;
                     case SmsManager.RESULT_ERROR_RADIO_OFF:
-                        Toast.putToast(context, "Radio was explicitly turned off");
+                        Toast.putToast(context, context.getString(R.string.toastRadioIsOff));
                         break;
                 }
             }
@@ -82,10 +82,10 @@ public class smsHelper extends BroadcastReceiver {
             public void onReceive(Context context, Intent intent) {
                 switch (getResultCode()) {
                     case Activity.RESULT_OK:
-                        Toast.putToast(context, "SMS delivered");
+                        Toast.putToast(context, context.getString(R.string.toastSmsDelivered));
                         break;
                     case Activity.RESULT_CANCELED:
-                        Toast.putToast(context, "SMS not delivered");
+                        Toast.putToast(context, context.getString(R.string.toastSmsNotDelivered));
                         break;
                 }
             }
@@ -123,12 +123,12 @@ public class smsHelper extends BroadcastReceiver {
             Toast.putToast(context, toast);
             dbHelper db = new dbHelper(context);
             if (db.insertSms("IN", fromPhone, content) == false) {
-                Log.d("------ SMS ------ : ", "Sms not save in database");
+//                Log.d("------ SMS ------ : ", "Sms not save in database");
             }
             else {
-                Log.d("------ SMS ------ : ", "Sms save in database");
+//                Log.d("------ SMS ------ : ", "Sms save in database");
                 if (db.checkContactByPhone(context, fromPhone) == false) {
-                    Log.d("------ SMS ------ : ", "Contact not exist");
+//                    Log.d("------ SMS ------ : ", "Contact not exist");
                     db.insertContact(new Contact(fromPhone, "", fromPhone, "", ""));
                 }
             }

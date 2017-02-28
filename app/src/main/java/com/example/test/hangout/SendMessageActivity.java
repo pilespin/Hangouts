@@ -1,13 +1,11 @@
 package com.example.test.hangout;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -17,9 +15,25 @@ import java.util.List;
 
 public class SendMessageActivity extends BaseClass {
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_send_message);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        setColor();
+        requestPermission(true);
+
+        //SET TITTLE
+        c = intentHelper.getContact(getIntent());
+        setTitle(c.getFirstname() + " " + c.getLastname());
+
+        displaySms();
+        doTheAutoRefresh();
+    }
+
     Contact c = null;
-//    SmsAdapter adapter;
-//    ListView mListView;
     private final Handler handler = new Handler();
     boolean killRefresh = false;
 
@@ -45,7 +59,7 @@ public class SendMessageActivity extends BaseClass {
                 }
 
                 if (killRefresh == false)
-                doTheAutoRefresh();
+                    doTheAutoRefresh();
             }
         }, 1000);
     }
@@ -75,20 +89,6 @@ public class SendMessageActivity extends BaseClass {
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_send_message);
-
-        //SET TITTLE
-        c = intentHelper.getContact(getIntent());
-        setTitle(c.getFirstname() + " " + c.getLastname());
-
-        displaySms();
-        doTheAutoRefresh();
-
-    }
-
-    @Override
     public void onDestroy() {
         super.onDestroy();
         handler.removeCallbacks(null);
@@ -113,4 +113,5 @@ public class SendMessageActivity extends BaseClass {
         finish();
         startActivity(getIntent());
     }
+
 }

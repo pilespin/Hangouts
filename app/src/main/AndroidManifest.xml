@@ -39,10 +39,13 @@
             android:name=".CreateContactActivity"
             android:label="@string/title_activity_create_contact"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".SendMessageActivity" />
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".SendMessageActivity"
+            android:label="@string/title_activity_send_message"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
