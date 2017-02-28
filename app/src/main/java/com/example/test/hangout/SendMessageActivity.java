@@ -102,14 +102,15 @@ public class SendMessageActivity extends BaseClass {
         String content = lib.getInsertedValue((EditText)findViewById(R.id.message_content));
         Contact c = intentHelper.getContact(getIntent());
 
-        s.sendSms(getBaseContext(), c.getPhone(), content);
+        Boolean ret = s.sendSms(getBaseContext(), c.getPhone(), content);
 
-        dbHelper db = new dbHelper(getBaseContext());
-        if (db.insertSms("OUT", c.getPhone(), content) == false)
-            Log.d("------ SMS ------ : ", "Sms not save in database");
-        else
-            Log.d("------ SMS ------ : ", "Sms save in database");
-
+        if (ret == true) {
+            dbHelper db = new dbHelper(getBaseContext());
+            if (db.insertSms("OUT", c.getPhone(), content) == false)
+                Log.d("------ SMS ------ : ", "Sms not save in database");
+            else
+                Log.d("------ SMS ------ : ", "Sms save in database");
+        }
         finish();
         startActivity(getIntent());
     }

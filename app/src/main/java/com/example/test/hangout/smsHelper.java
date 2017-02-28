@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.telephony.SmsManager;
 import android.telephony.SmsMessage;
-import android.util.Log;
 
 /**
  * Created by pilespin on 2/8/17.
@@ -22,28 +21,28 @@ public class smsHelper extends BroadcastReceiver {
 
     public final int SMS_MAX_LENGTH = 160;
 
-    public void sendSms(Context context, String phoneNumber, final String content) {
+    public Boolean sendSms(Context context, String phoneNumber, final String content) {
 
         int permissionCheck = ContextCompat.checkSelfPermission(context, Manifest.permission.SEND_SMS);
         if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
             Toast.putToast(context, context.getString(R.string.toastNeedPermission));
-            return;
+            return false;
         }
 
         if (phoneNumber == null || phoneNumber.length() <= 0)
         {
             Toast.putToast(context, "Text is too long");
-            return;
+            return false;
         }
         if (content == null || content.length() <= 0)
         {
             Toast.putToast(context, "Text is empty");
-            return;
+            return false;
         }
         if (content == null || content.length() > SMS_MAX_LENGTH)
         {
             Toast.putToast(context, "Text is too long");
-            return;
+            return false;
         }
 
         String SMS_SENT = "SMS_SENT";
@@ -96,6 +95,7 @@ public class smsHelper extends BroadcastReceiver {
         // Send a text based SMS
         smsManager.sendTextMessage(phoneNumber, null, content, sentPendingIntent, deliveredPendingIntent);
 
+        return true;
     }
 
     @Override
