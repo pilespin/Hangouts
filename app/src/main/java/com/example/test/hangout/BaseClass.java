@@ -72,7 +72,7 @@ public class BaseClass extends AppCompatActivity {
         int hour = time.hour;
         int min = time.minute;
         int sec = time.second;
-        String currentTime = getString(R.string.toastLastOpened);
+        String currentTime = getString(R.string.toastLastOpened) + " ";
 
         currentTime += currentTime.valueOf(hour) + " h ";
         currentTime += currentTime.valueOf(min) + " min ";
